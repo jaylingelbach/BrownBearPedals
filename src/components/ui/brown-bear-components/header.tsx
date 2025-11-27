@@ -22,14 +22,20 @@ export default function Header() {
         {/* Simple links */}
         <Link
           href="/about"
-          className={cn(baseNavItemClasses, isActive('/about') && 'text-black')}
+          className={cn(
+            baseNavItemClasses,
+            isActive('/about') && 'text-foreground'
+          )}
         >
           About
         </Link>
 
         <Link
           href="/merch"
-          className={cn(baseNavItemClasses, isActive('/merch') && 'text-black')}
+          className={cn(
+            baseNavItemClasses,
+            isActive('/merch') && 'text-foreground'
+          )}
         >
           Merch
         </Link>
@@ -40,7 +46,7 @@ export default function Header() {
           <button
             className={cn(
               baseNavItemClasses,
-              isActive('/pedals') && 'text-black'
+              isActive('/pedals') && 'text-foreground'
             )}
             type="button"
           >
@@ -110,7 +116,7 @@ export default function Header() {
           <button
             className={cn(
               baseNavItemClasses,
-              isActive('/contact') && 'text-black'
+              isActive('/contact') && 'text-foreground'
             )}
             type="button"
           >
