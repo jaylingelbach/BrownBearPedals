@@ -2,12 +2,24 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { useRef, useState } from 'react';
+import type { KeyboardEvent } from 'react';
+
 import { cn } from '@/lib/utils';
-import { useState } from 'react';
 
 export default function Header() {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
+
+  // Desktop dropdown state
+  const [pedalsOpen, setPedalsOpen] = useState(false);
+  const [contactOpen, setContactOpen] = useState(false);
+
+  const pedalsTriggerRef = useRef<HTMLButtonElement | null>(null);
+  const pedalsMenuRef = useRef<HTMLUListElement | null>(null);
+
+  const contactTriggerRef = useRef<HTMLButtonElement | null>(null);
+  const contactMenuRef = useRef<HTMLUListElement | null>(null);
 
   const baseNavItemClasses =
     'whitespace-nowrap text-xs font-medium tracking-tight uppercase text-muted-foreground ' +
@@ -18,6 +30,80 @@ export default function Header() {
 
   const isActive = (href: string) =>
     href === '/' ? pathname === '/' : pathname.startsWith(href);
+
+  // ── Keyboard helpers for menus ────────────────────────────────────────────
+
+  function focusFirstMenuItem(menuRef: typeof pedalsMenuRef) {
+    const firstLink =
+      menuRef.current?.querySelector<HTMLAnchorElement>('a, button');
+    firstLink?.focus();
+  }
+
+  function handleMenuKeyDown(
+    event: KeyboardEvent<HTMLUListElement>,
+    menuRef: typeof pedalsMenuRef,
+    closeMenu: () => void,
+    triggerRef: typeof pedalsTriggerRef
+  ) {
+    const links =
+      menuRef.current?.querySelectorAll<HTMLAnchorElement>('a, button');
+    if (!links || links.length === 0) return;
+
+    const items = Array.from(links);
+    const currentIndex = items.findIndex(
+      (item) => item === document.activeElement
+    );
+
+    switch (event.key) {
+      case 'Escape': {
+        event.preventDefault();
+        closeMenu();
+        triggerRef.current?.focus();
+        break;
+      }
+      case 'ArrowDown': {
+        event.preventDefault();
+        const nextIndex =
+          currentIndex < 0 ? 0 : (currentIndex + 1) % items.length;
+        items[nextIndex].focus();
+        break;
+      }
+      case 'ArrowUp': {
+        event.preventDefault();
+        const prevIndex =
+          currentIndex < 0
+            ? items.length - 1
+            : (currentIndex - 1 + items.length) % items.length;
+        items[prevIndex].focus();
+        break;
+      }
+      default:
+        break;
+    }
+  }
+
+  function handleTriggerKeyDown(
+    event: KeyboardEvent<HTMLButtonElement>,
+    open: boolean,
+    setOpen: (next: boolean) => void,
+    menuRef: typeof pedalsMenuRef
+  ) {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      const next = !open;
+      setOpen(next);
+      if (next) {
+        // move focus into the menu
+        setTimeout(() => focusFirstMenuItem(menuRef), 0);
+      }
+    } else if (event.key === 'ArrowDown') {
+      event.preventDefault();
+      if (!open) {
+        setOpen(true);
+      }
+      setTimeout(() => focusFirstMenuItem(menuRef), 0);
+    }
+  }
 
   return (
     <header className="border-b border-border bg-background">
@@ -54,57 +140,92 @@ export default function Header() {
           </Link>
 
           {/* ── Pedals dropdown (desktop) ────────────────────────────── */}
-          <div className="relative group">
+          <div
+            className="relative"
+            onMouseEnter={() => setPedalsOpen(true)}
+            onMouseLeave={() => setPedalsOpen(false)}
+          >
             <button
+              ref={pedalsTriggerRef}
               type="button"
               aria-haspopup="true"
+              aria-expanded={pedalsOpen}
+              aria-controls="pedals-menu"
               className={cn(
                 baseNavItemClasses,
                 isActive('/pedals') && 'text-foreground'
               )}
+              onKeyDown={(event) =>
+                handleTriggerKeyDown(
+                  event,
+                  pedalsOpen,
+                  setPedalsOpen,
+                  pedalsMenuRef
+                )
+              }
             >
               Pedals
             </button>
 
-            {/* Hover bridge */}
+            {/* hover bridge */}
             <div className="absolute left-1/2 top-full h-3 w-24 -translate-x-1/2" />
 
+            {/* container div handles positioning/animation */}
             <div
               className={cn(
                 'absolute left-1/2 top-full z-20 mt-2 -translate-x-1/2',
                 'min-w-[180px] rounded-xl border border-border bg-background px-3 py-2 shadow-lg',
-                'opacity-0 invisible translate-y-1',
-                // open on hover OR keyboard focus within the group
-                'group-hover:opacity-100 group-hover:visible group-hover:translate-y-0',
-                'group-focus-within:opacity-100 group-focus-within:visible group-focus-within:translate-y-0',
-                'transition ease-out duration-150'
+                'transition ease-out duration-150',
+                pedalsOpen
+                  ? 'opacity-100 visible translate-y-0'
+                  : 'opacity-0 invisible translate-y-1'
               )}
             >
-              <ul className="space-y-3">
-                <li>
-                  <Link href="/pedals" className={dropDownItemClass}>
+              <ul
+                id="pedals-menu"
+                role="menu"
+                ref={pedalsMenuRef}
+                onKeyDown={(event) =>
+                  handleMenuKeyDown(
+                    event,
+                    pedalsMenuRef,
+                    () => setPedalsOpen(false),
+                    pedalsTriggerRef
+                  )
+                }
+                className="space-y-3"
+              >
+                <li role="none">
+                  <Link
+                    href="/pedals"
+                    role="menuitem"
+                    className={dropDownItemClass}
+                  >
                     All Pedals
                   </Link>
                 </li>
-                <li>
+                <li role="none">
                   <Link
                     href="/pedals?productLine=Tarot"
+                    role="menuitem"
                     className={dropDownItemClass}
                   >
                     Tarot Series
                   </Link>
                 </li>
-                <li>
+                <li role="none">
                   <Link
                     href="/pedals?productLine=Limited"
+                    role="menuitem"
                     className={dropDownItemClass}
                   >
                     Limited Release
                   </Link>
                 </li>
-                <li>
+                <li role="none">
                   <Link
                     href="/pedals?productLine=Custom"
+                    role="menuitem"
                     className={dropDownItemClass}
                   >
                     Custom Order
@@ -115,44 +236,83 @@ export default function Header() {
           </div>
 
           {/* ── Contact dropdown (desktop) ──────────────────────────── */}
-          <div className="relative group">
+          <div
+            className="relative"
+            onMouseEnter={() => setContactOpen(true)}
+            onMouseLeave={() => setContactOpen(false)}
+          >
             <button
+              ref={contactTriggerRef}
               type="button"
               aria-haspopup="true"
+              aria-expanded={contactOpen}
+              aria-controls="contact-menu"
               className={cn(
                 baseNavItemClasses,
                 isActive('/contact') && 'text-foreground'
               )}
+              onKeyDown={(event) =>
+                handleTriggerKeyDown(
+                  event,
+                  contactOpen,
+                  setContactOpen,
+                  contactMenuRef
+                )
+              }
             >
               Contact
             </button>
 
-            {/* Hover bridge */}
             <div className="absolute left-1/2 top-full h-3 w-24 -translate-x-1/2" />
 
             <div
               className={cn(
                 'absolute left-1/2 top-full z-20 mt-2 -translate-x-1/2',
                 'min-w-[180px] rounded-xl border border-border bg-background px-3 py-2 shadow-lg',
-                'opacity-0 invisible translate-y-1',
-                'group-hover:opacity-100 group-hover:visible group-hover:translate-y-0',
-                'group-focus-within:opacity-100 group-focus-within:visible group-focus-within:translate-y-0',
-                'transition ease-out duration-150'
+                'transition ease-out duration-150',
+                contactOpen
+                  ? 'opacity-100 visible translate-y-0'
+                  : 'opacity-0 invisible translate-y-1'
               )}
             >
-              <ul className="space-y-3">
-                <li>
-                  <Link href="/contact" className={dropDownItemClass}>
+              <ul
+                id="contact-menu"
+                role="menu"
+                ref={contactMenuRef}
+                onKeyDown={(event) =>
+                  handleMenuKeyDown(
+                    event,
+                    contactMenuRef,
+                    () => setContactOpen(false),
+                    contactTriggerRef
+                  )
+                }
+                className="space-y-3"
+              >
+                <li role="none">
+                  <Link
+                    href="/contact"
+                    role="menuitem"
+                    className={dropDownItemClass}
+                  >
                     Contact Us
                   </Link>
                 </li>
-                <li>
-                  <Link href="/support" className={dropDownItemClass}>
+                <li role="none">
+                  <Link
+                    href="/support"
+                    role="menuitem"
+                    className={dropDownItemClass}
+                  >
                     Support
                   </Link>
                 </li>
-                <li>
-                  <Link href="/faq" className={dropDownItemClass}>
+                <li role="none">
+                  <Link
+                    href="/faq"
+                    role="menuitem"
+                    className={dropDownItemClass}
+                  >
                     FAQ
                   </Link>
                 </li>
@@ -176,14 +336,13 @@ export default function Header() {
         </button>
       </nav>
 
-      {/* Mobile menu panel */}
+      {/* Mobile menu panel (unchanged) */}
       {mobileOpen && (
         <div
           className="border-t border-border bg-background md:hidden"
           id="mobile-nav"
         >
           <div className="mx-auto max-w-6xl space-y-4 px-4 py-4">
-            {/* Top-level links */}
             <Link
               href="/about"
               className="block py-2 text-sm uppercase tracking-tight text-muted-foreground"
@@ -199,7 +358,6 @@ export default function Header() {
               Merch
             </Link>
 
-            {/* Pedals section */}
             <div className="pt-2">
               <p className="text-[0.7rem] font-semibold uppercase tracking-tight text-foreground">
                 Pedals
@@ -236,7 +394,6 @@ export default function Header() {
               </div>
             </div>
 
-            {/* Contact section */}
             <div className="pt-2">
               <p className="text-[0.7rem] font-semibold uppercase tracking-tight text-foreground">
                 Contact
