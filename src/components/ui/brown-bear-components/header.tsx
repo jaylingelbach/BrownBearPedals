@@ -10,7 +10,8 @@ export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const baseNavItemClasses =
-    'whitespace-nowrap text-xs font-medium tracking-tight uppercase text-muted-foreground';
+    'whitespace-nowrap text-xs font-medium tracking-tight uppercase text-muted-foreground ' +
+    'focus-visible:outline-none focus-visible:underline';
 
   const dropDownItemClass =
     'block px-1 py-1 text-xs uppercase tracking-tight text-muted-foreground hover:text-foreground hover:underline';
@@ -20,14 +21,17 @@ export default function Header() {
 
   return (
     <header className="border-b border-border bg-background">
-      <nav className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4">
-        {/* Left side: logo / brand (placeholder for now) */}
+      <nav
+        className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4"
+        aria-label="Main navigation"
+      >
+        {/* Left: brand / logo */}
         <Link href="/" className="text-sm font-semibold tracking-tight">
           Brown Bear Pedals
         </Link>
 
         {/* Desktop nav (hidden on small screens) */}
-        <div className="hidden md:flex items-center justify-center gap-8">
+        <div className="hidden items-center justify-center gap-8 md:flex">
           {/* Simple links */}
           <Link
             href="/about"
@@ -49,32 +53,30 @@ export default function Header() {
             Merch
           </Link>
 
-          {/* ── Pedals dropdown (desktop only) ────────────────────────────── */}
+          {/* ── Pedals dropdown (desktop) ────────────────────────────── */}
           <div className="relative group">
             <button
+              type="button"
+              aria-haspopup="true"
               className={cn(
                 baseNavItemClasses,
                 isActive('/pedals') && 'text-foreground'
               )}
-              type="button"
             >
               Pedals
             </button>
 
             {/* Hover bridge */}
-            <div
-              className="
-                absolute left-1/2 top-full 
-                h-3 w-24 -translate-x-1/2
-              "
-            />
+            <div className="absolute left-1/2 top-full h-3 w-24 -translate-x-1/2" />
 
             <div
               className={cn(
                 'absolute left-1/2 top-full z-20 mt-2 -translate-x-1/2',
                 'min-w-[180px] rounded-xl border border-border bg-white px-3 py-2 shadow-lg',
                 'opacity-0 invisible translate-y-1',
+                // open on hover OR keyboard focus within the group
                 'group-hover:opacity-100 group-hover:visible group-hover:translate-y-0',
+                'group-focus-within:opacity-100 group-focus-within:visible group-focus-within:translate-y-0',
                 'transition ease-out duration-150'
               )}
             >
@@ -112,25 +114,21 @@ export default function Header() {
             </div>
           </div>
 
-          {/* ── Contact dropdown (desktop only) ──────────────────────────── */}
+          {/* ── Contact dropdown (desktop) ──────────────────────────── */}
           <div className="relative group">
             <button
+              type="button"
+              aria-haspopup="true"
               className={cn(
                 baseNavItemClasses,
                 isActive('/contact') && 'text-foreground'
               )}
-              type="button"
             >
               Contact
             </button>
 
             {/* Hover bridge */}
-            <div
-              className="
-                absolute left-1/2 top-full 
-                h-3 w-24 -translate-x-1/2
-              "
-            />
+            <div className="absolute left-1/2 top-full h-3 w-24 -translate-x-1/2" />
 
             <div
               className={cn(
@@ -138,6 +136,7 @@ export default function Header() {
                 'min-w-[180px] rounded-xl border border-border bg-white px-3 py-2 shadow-lg',
                 'opacity-0 invisible translate-y-1',
                 'group-hover:opacity-100 group-hover:visible group-hover:translate-y-0',
+                'group-focus-within:opacity-100 group-focus-within:visible group-focus-within:translate-y-0',
                 'transition ease-out duration-150'
               )}
             >
@@ -162,29 +161,28 @@ export default function Header() {
           </div>
         </div>
 
-        {/* Mobile hamburger (hidden on md and up) */}
+        {/* Mobile hamburger (md and down) */}
         <button
           type="button"
-          className="md:hidden inline-flex h-11 w-11 items-center justify-center rounded-full border border-border"
+          className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-border md:hidden"
           aria-label="Toggle navigation"
           aria-expanded={mobileOpen}
           onClick={() => setMobileOpen((prev) => !prev)}
         >
-          {/* simple three-line icon */}
           <span className="sr-only">Toggle navigation</span>
           <span className="block h-0.5 w-5 bg-foreground" />
-          <span className="block h-0.5w-5 bg-foreground mt-1" />
-          <span className="block h-0.5 w-5 bg-foreground mt-1" />
+          <span className="mt-1 block h-0.5 w-5 bg-foreground" />
+          <span className="mt-1 block h-0.5 w-5 bg-foreground" />
         </button>
       </nav>
 
       {/* Mobile menu panel */}
       {mobileOpen && (
         <div
-          className="md:hidden border-t border-border bg-background"
+          className="border-t border-border bg-background md:hidden"
           id="mobile-nav"
         >
-          <div className="mx-auto max-w-6xl px-4 py-4 space-y-4">
+          <div className="mx-auto max-w-6xl space-y-4 px-4 py-4">
             {/* Top-level links */}
             <Link
               href="/about"
