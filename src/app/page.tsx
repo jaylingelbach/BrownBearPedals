@@ -28,18 +28,16 @@ export default function Home() {
         className="grid gap-12 sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3 mt-5"
         id="product-grid"
       >
-        {pedals.map(
-          ({ slug, name, priceCents, imageUrl, status, descriptionShort }) => (
-            <PedalGridItem
-              key={slug}
-              slug={slug}
-              name={name}
-              priceCents={priceCents}
-              imageUrl={imageUrl}
-              status={status}
-            />
-          )
-        )}
+        {pedals.map(({ slug, name, priceCents, imageUrl, status }) => (
+          <PedalGridItem
+            key={slug}
+            slug={slug}
+            name={name}
+            priceCents={priceCents}
+            imageUrl={imageUrl}
+            status={status}
+          />
+        ))}
       </section>
     </main>
   );

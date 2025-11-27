@@ -74,6 +74,6 @@ export function getPedalsForFilter(filter: PedalFilterId): Pedal[] {
  * Find all pedals in a line
  * (e.g. "Tarot", "Limited", "Custom" etc.)
  */
-export function getPedalsByProductLine(productLine: ProductLine) {
+export function getPedalsByProductLine(productLine: ProductLine): Pedal[] {
   return pedals.filter((pedal) => pedal.productLine === productLine);
 }

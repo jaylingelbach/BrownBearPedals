@@ -35,7 +35,7 @@ export default function PedalFiltersBar(props: PedalFiltersBarProps) {
         return (
           <Button
             key={filter.id}
-            aria-current={isActive ? 'page' : undefined}
+            aria-pressed={isActive}
             size="lg"
             variant="link"
             onClick={() => onFilterChange(filter.id)}
