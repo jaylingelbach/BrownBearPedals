@@ -8,7 +8,7 @@
  * descriptionShort – for the card * Optional *
  * descriptionLong – for the detail page body * Optional *
  * tags – ['Overdrive', 'One-off'] * Optional *
- * series - 'Tarot', 'Handwired', 'Limited', 'Custom' etc * Optional *
+ * productLine - 'Tarot', 'Handwired', 'Limited', 'Custom' etc * Optional *
  ** maybe createdAt / order for sorting
  **/
 
