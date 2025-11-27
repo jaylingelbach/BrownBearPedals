@@ -3,9 +3,11 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
+import { useState } from 'react';
 
 export default function Header() {
   const pathname = usePathname();
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   const baseNavItemClasses =
     'whitespace-nowrap text-xs font-medium tracking-tight uppercase text-muted-foreground';
@@ -18,148 +20,256 @@ export default function Header() {
 
   return (
     <header className="border-b border-border bg-background">
-      <nav className="mx-auto flex max-w-6xl items-center justify-center gap-8 px-4 py-4">
-        {/* Simple links */}
-        <Link
-          href="/about"
-          className={cn(
-            baseNavItemClasses,
-            isActive('/about') && 'text-foreground'
-          )}
-        >
-          About
+      <nav className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4">
+        {/* Left side: logo / brand (placeholder for now) */}
+        <Link href="/" className="text-sm font-semibold tracking-tight">
+          Brown Bear Pedals
         </Link>
 
-        <Link
-          href="/merch"
-          className={cn(
-            baseNavItemClasses,
-            isActive('/merch') && 'text-foreground'
-          )}
-        >
-          Merch
-        </Link>
-
-        {/* ── Pedals dropdown (pure CSS with hover bridge) ─────────────────── */}
-        <div className="relative group">
-          {/* Trigger */}
-          <button
+        {/* Desktop nav (hidden on small screens) */}
+        <div className="hidden md:flex items-center justify-center gap-8">
+          {/* Simple links */}
+          <Link
+            href="/about"
             className={cn(
               baseNavItemClasses,
-              isActive('/pedals') && 'text-foreground'
+              isActive('/about') && 'text-foreground'
             )}
-            type="button"
           >
-            Pedals
-          </button>
+            About
+          </Link>
 
-          {/* Invisible hover bridge between button and menu */}
-          <div
-            className="
-              absolute left-1/2 top-full 
-              h-3 w-24 -translate-x-1/2
-            "
-          />
-
-          {/* Dropdown panel */}
-          <div
+          <Link
+            href="/merch"
             className={cn(
-              'absolute left-1/2 top-full z-20 mt-2 -translate-x-1/2',
-              'min-w-[180px] rounded-xl border border-border bg-white px-3 py-2 shadow-lg',
-              // hidden by default
-              'opacity-0 invisible translate-y-1',
-              // visible while hovering the group (button, bridge, or panel)
-              'group-hover:opacity-100 group-hover:visible group-hover:translate-y-0',
-              'transition ease-out duration-150'
+              baseNavItemClasses,
+              isActive('/merch') && 'text-foreground'
             )}
           >
-            <ul className="space-y-3">
-              <li>
+            Merch
+          </Link>
+
+          {/* ── Pedals dropdown (desktop only) ────────────────────────────── */}
+          <div className="relative group">
+            <button
+              className={cn(
+                baseNavItemClasses,
+                isActive('/pedals') && 'text-foreground'
+              )}
+              type="button"
+            >
+              Pedals
+            </button>
+
+            {/* Hover bridge */}
+            <div
+              className="
+                absolute left-1/2 top-full 
+                h-3 w-24 -translate-x-1/2
+              "
+            />
+
+            <div
+              className={cn(
+                'absolute left-1/2 top-full z-20 mt-2 -translate-x-1/2',
+                'min-w-[180px] rounded-xl border border-border bg-white px-3 py-2 shadow-lg',
+                'opacity-0 invisible translate-y-1',
+                'group-hover:opacity-100 group-hover:visible group-hover:translate-y-0',
+                'transition ease-out duration-150'
+              )}
+            >
+              <ul className="space-y-3">
+                <li>
+                  <Link href="/pedals" className={dropDownItemClass}>
+                    All Pedals
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/pedals?productLine=Tarot"
+                    className={dropDownItemClass}
+                  >
+                    Tarot Series
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/pedals?productLine=Limited"
+                    className={dropDownItemClass}
+                  >
+                    Limited Release
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/pedals?productLine=Custom"
+                    className={dropDownItemClass}
+                  >
+                    Custom Order
+                  </Link>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          {/* ── Contact dropdown (desktop only) ──────────────────────────── */}
+          <div className="relative group">
+            <button
+              className={cn(
+                baseNavItemClasses,
+                isActive('/contact') && 'text-foreground'
+              )}
+              type="button"
+            >
+              Contact
+            </button>
+
+            {/* Hover bridge */}
+            <div
+              className="
+                absolute left-1/2 top-full 
+                h-3 w-24 -translate-x-1/2
+              "
+            />
+
+            <div
+              className={cn(
+                'absolute left-1/2 top-full z-20 mt-2 -translate-x-1/2',
+                'min-w-[180px] rounded-xl border border-border bg-white px-3 py-2 shadow-lg',
+                'opacity-0 invisible translate-y-1',
+                'group-hover:opacity-100 group-hover:visible group-hover:translate-y-0',
+                'transition ease-out duration-150'
+              )}
+            >
+              <ul className="space-y-3">
+                <li>
+                  <Link href="/contact" className={dropDownItemClass}>
+                    Contact Us
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/support" className={dropDownItemClass}>
+                    Support
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/faq" className={dropDownItemClass}>
+                    FAQ
+                  </Link>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        {/* Mobile hamburger (hidden on md and up) */}
+        <button
+          type="button"
+          className="md:hidden inline-flex h-11 w-11 items-center justify-center rounded-full border border-border"
+          aria-label="Toggle navigation"
+          aria-expanded={mobileOpen}
+          onClick={() => setMobileOpen((prev) => !prev)}
+        >
+          {/* simple three-line icon */}
+          <span className="sr-only">Toggle navigation</span>
+          <span className="block h-0.5 w-5 bg-foreground" />
+          <span className="block h-0.5w-5 bg-foreground mt-1" />
+          <span className="block h-0.5 w-5 bg-foreground mt-1" />
+        </button>
+      </nav>
+
+      {/* Mobile menu panel */}
+      {mobileOpen && (
+        <div
+          className="md:hidden border-t border-border bg-background"
+          id="mobile-nav"
+        >
+          <div className="mx-auto max-w-6xl px-4 py-4 space-y-4">
+            {/* Top-level links */}
+            <Link
+              href="/about"
+              className="block py-2 text-sm uppercase tracking-tight text-muted-foreground"
+              onClick={() => setMobileOpen(false)}
+            >
+              About
+            </Link>
+            <Link
+              href="/merch"
+              className="block py-2 text-sm uppercase tracking-tight text-muted-foreground"
+              onClick={() => setMobileOpen(false)}
+            >
+              Merch
+            </Link>
+
+            {/* Pedals section */}
+            <div className="pt-2">
+              <p className="text-[0.7rem] font-semibold uppercase tracking-tight text-foreground">
+                Pedals
+              </p>
+              <div className="mt-1 space-y-1">
                 <Link
                   href="/pedals"
-                  className="block px-1 py-1 text-xs uppercase tracking-tight
-             text-muted-foreground hover:text-foreground hover:underline"
+                  className="block py-1 text-xs uppercase tracking-tight text-muted-foreground"
+                  onClick={() => setMobileOpen(false)}
                 >
                   All Pedals
                 </Link>
-              </li>
-              <li>
                 <Link
                   href="/pedals?productLine=Tarot"
-                  className={dropDownItemClass}
+                  className="block py-1 text-xs uppercase tracking-tight text-muted-foreground"
+                  onClick={() => setMobileOpen(false)}
                 >
                   Tarot Series
                 </Link>
-              </li>
-              <li>
                 <Link
                   href="/pedals?productLine=Limited"
-                  className={dropDownItemClass}
+                  className="block py-1 text-xs uppercase tracking-tight text-muted-foreground"
+                  onClick={() => setMobileOpen(false)}
                 >
                   Limited Release
                 </Link>
-              </li>
-              <li>
                 <Link
                   href="/pedals?productLine=Custom"
-                  className={dropDownItemClass}
+                  className="block py-1 text-xs uppercase tracking-tight text-muted-foreground"
+                  onClick={() => setMobileOpen(false)}
                 >
                   Custom Order
                 </Link>
-              </li>
-            </ul>
-          </div>
-        </div>
+              </div>
+            </div>
 
-        {/* ── Contact dropdown (same pattern) ──────────────────────────────── */}
-        <div className="relative group">
-          <button
-            className={cn(
-              baseNavItemClasses,
-              isActive('/contact') && 'text-foreground'
-            )}
-            type="button"
-          >
-            Contact
-          </button>
-
-          {/* Hover bridge */}
-          <div
-            className="
-              absolute left-1/2 top-full 
-              h-3 w-24 -translate-x-1/2
-            "
-          />
-
-          <div
-            className={cn(
-              'absolute left-1/2 top-full z-20 mt-2 -translate-x-1/2',
-              'min-w-[180px] rounded-xl border border-border bg-white px-3 py-2 shadow-lg',
-              'opacity-0 invisible translate-y-1',
-              'group-hover:opacity-100 group-hover:visible group-hover:translate-y-0',
-              'transition ease-out duration-150'
-            )}
-          >
-            <ul className="space-y-3">
-              <li>
-                <Link href="/contact" className={dropDownItemClass}>
+            {/* Contact section */}
+            <div className="pt-2">
+              <p className="text-[0.7rem] font-semibold uppercase tracking-tight text-foreground">
+                Contact
+              </p>
+              <div className="mt-1 space-y-1">
+                <Link
+                  href="/contact"
+                  className="block py-1 text-xs uppercase tracking-tight text-muted-foreground"
+                  onClick={() => setMobileOpen(false)}
+                >
                   Contact Us
                 </Link>
-              </li>
-              <li>
-                <Link href="/support" className={dropDownItemClass}>
+                <Link
+                  href="/support"
+                  className="block py-1 text-xs uppercase tracking-tight text-muted-foreground"
+                  onClick={() => setMobileOpen(false)}
+                >
                   Support
                 </Link>
-              </li>
-              <li>
-                <Link href="/faq" className={dropDownItemClass}>
+                <Link
+                  href="/faq"
+                  className="block py-1 text-xs uppercase tracking-tight text-muted-foreground"
+                  onClick={() => setMobileOpen(false)}
+                >
                   FAQ
                 </Link>
-              </li>
-            </ul>
+              </div>
+            </div>
           </div>
         </div>
-      </nav>
+      )}
     </header>
   );
 }
