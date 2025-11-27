@@ -18,7 +18,7 @@ export default function Home() {
   return (
     <main className="mx-auto max-w-6xl px-4 py-10">
       {/* Optional heading / filters go here */}
-      <section className="mb-10">
+      <section className="mb-10" aria-label="Filter pedals">
         <PedalFiltersBar
           selectedFilter={selectedFilter}
           onFilterChange={setSelectedFilter}
@@ -26,7 +26,7 @@ export default function Home() {
       </section>
       <section
         className="grid gap-12 sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3 mt-5"
-        id="product-grid"
+        aria-label="Pedal results"
       >
         {pedals.map(({ slug, name, priceCents, imageUrl, status }) => (
           <PedalGridItem
