@@ -23,7 +23,7 @@ export function PedalGridItem(props: PedalGridItemProps) {
     <Link
       href={`/pedals/${slug}`}
       className={cn(
-        'group flex flex-col items-center gap-6 transition-transform duration-200 hover:scale-[1.08] hover:-translate-y-1',
+        'group flex flex-col items-center gap-6 transition-transform duration-900 hover:scale-[1.08] hover:-translate-y-1',
         isSold && 'opacity-80',
         className
       )}

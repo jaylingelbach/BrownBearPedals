@@ -1,4 +1,12 @@
+// TODO: Doc strings
 export type ProductStatus = 'available' | 'sold' | 'coming_soon';
+
+export type ProductLine =
+  | 'Tarot'
+  | 'Limited'
+  | 'Custom'
+  | 'Handwired'
+  | 'Point to Point';
 
 export type PedalType =
   | 'Overdrive'
@@ -25,4 +33,5 @@ export interface Pedal {
   descriptionLong?: string;
   tags?: string[];
   type: PedalType;
+  productLine?: ProductLine;
 }

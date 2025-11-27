@@ -14,6 +14,7 @@ import { cn } from '@/lib/utils';
 import { formatPrice } from '@/lib/money/utils';
 import { ProductStatus } from '@/modules/pedals/types';
 
+// TODO: Doc strings
 interface ProductCardProps {
   name: string;
   slug: string;

@@ -11,6 +11,7 @@ interface ProductCardProps {
   tags?: string[];
 }
 
+// TODO: Doc strings
 export default function ProductList({
   slug,
   name,
@@ -19,7 +20,7 @@ export default function ProductList({
   status
 }: ProductCardProps) {
   return (
-    <div>
+    <div id="pedal-grid-item">
       <PedalGridItem
         key={slug}
         slug={slug}
