@@ -72,7 +72,7 @@ export default function Header() {
             <div
               className={cn(
                 'absolute left-1/2 top-full z-20 mt-2 -translate-x-1/2',
-                'min-w-[180px] rounded-xl border border-border bg-white px-3 py-2 shadow-lg',
+                'min-w-[180px] rounded-xl border border-border bg-background px-3 py-2 shadow-lg',
                 'opacity-0 invisible translate-y-1',
                 // open on hover OR keyboard focus within the group
                 'group-hover:opacity-100 group-hover:visible group-hover:translate-y-0',
@@ -133,7 +133,7 @@ export default function Header() {
             <div
               className={cn(
                 'absolute left-1/2 top-full z-20 mt-2 -translate-x-1/2',
-                'min-w-[180px] rounded-xl border border-border bg-white px-3 py-2 shadow-lg',
+                'min-w-[180px] rounded-xl border border-border bg-background px-3 py-2 shadow-lg',
                 'opacity-0 invisible translate-y-1',
                 'group-hover:opacity-100 group-hover:visible group-hover:translate-y-0',
                 'group-focus-within:opacity-100 group-focus-within:visible group-focus-within:translate-y-0',
