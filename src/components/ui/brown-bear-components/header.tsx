@@ -197,7 +197,7 @@ export default function Header() {
         {/* Left: brand / logo */}
         <Link
           href="/"
-          className="flex items-center gap-3 group"
+          className="flex items-center gap-3 group mt-3"
           aria-label="Brown Bear Effects home"
         >
           {/* Circular badge / logo */}
