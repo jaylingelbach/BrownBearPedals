@@ -23,8 +23,9 @@ export function getPedalsByStatus(status: ProductStatus): Pedal[] {
 }
 
 /**
- * Convenience helper for just "available" pedals,
- * which is what your /pedals grid uses.
+ * Get pedals whose status is 'available'.
+ *
+ * @returns An array of pedals whose `status` is equal to `'available'`.
  */
 export function getAvailablePedals(): Pedal[] {
   return getPedalsByStatus('available');
@@ -55,20 +56,19 @@ export function getPedalsByType(type: PedalType): Pedal[] {
 }
 
 /**
- * Filter by available pedals and type
- * (e.g. "Overdrive", "Fuzz", etc.)
- * Get available pedals matching the given pedal type.
+ * Get available pedals matching the specified pedal type.
  *
- * @param type - The pedal type to filter by (e.g., "Overdrive", "Fuzz")
- * @returns An array of pedals whose status is `'available'` and whose `type` equals `type`
+ * @param type - The pedal type to filter by (for example, "Overdrive" or "Fuzz")
+ * @returns An array of pedals with status `'available'` whose `type` equals the provided `type`
  */
 export function getAvailablePedalsByType(type: PedalType): Pedal[] {
   return getAvailablePedals().filter((pedal) => pedal.type === type);
 }
 
 /**
- * Return all pedal *types* that currently exist in available stock.
- * (Used to drive the filter bar options.)
+ * Get distinct pedal types present in available stock.
+ *
+ * @returns An array of unique `PedalType` values representing types of pedals currently available
  */
 export function getAvailablePedalTypes(): PedalType[] {
   const available = getAvailablePedals();

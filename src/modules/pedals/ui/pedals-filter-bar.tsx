@@ -12,6 +12,14 @@ interface PedalFiltersBarProps {
 
 type FilterOption = { id: PedalFilterId; label: string };
 
+/**
+ * Render a row of filter buttons for pedal types including an "All Products" option.
+ *
+ * @param props.selectedFilter - The currently selected filter id.
+ * @param props.onFilterChange - Callback invoked with the selected `PedalFilterId` when a button is clicked.
+ * @param props.availableTypes - Array of pedal types to display as filter options.
+ * @returns The React element containing buttons for "All Products" and each provided pedal type.
+ */
 export default function PedalFiltersBar(props: PedalFiltersBarProps) {
   const { selectedFilter, onFilterChange, availableTypes } = props;
 
