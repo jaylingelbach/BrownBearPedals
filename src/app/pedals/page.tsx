@@ -3,7 +3,7 @@ import { getAvailablePedals } from '@/modules/pedals/queries';
 
 export default function PedalsPage() {
   const pedals = getAvailablePedals();
-  console.log(`available: ${JSON.stringify(pedals, null, 2)}`);
+  git;
   return (
     <main className="mx-auto max-w-6xl px-4 py-10">
       {/* Optional heading / filters go here */}
