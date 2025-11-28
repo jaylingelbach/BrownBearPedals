@@ -1,7 +1,7 @@
 'use client';
 
+import { Suspense, useState } from 'react';
 import Link from 'next/link';
-import { useMemo, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 
 import { PedalGridItem } from '@/components/ui/brown-bear-components/pedal-grid-item';
@@ -13,109 +13,73 @@ import {
 import type {
   Pedal,
   PedalType,
-  ProductLine,
-  PedalFilterId
+  PedalFilterId,
+  ProductLine
 } from '@/modules/pedals/types';
 import { isProductLine } from '@/modules/pedals/utils';
 import PedalFiltersBar from '@/modules/pedals/ui/pedals-filter-bar';
 import { CustomOrderInfo } from '@/modules/pedals/ui/custom-order.info';
 
-export default function PedalsPage() {
+/**
+ * Inner page that actually uses useSearchParams.
+ * This must be wrapped in <Suspense> in the default export.
+ */
+function PedalsPageInner() {
   const searchParams = useSearchParams();
   const raw = searchParams.get('productLine');
 
-  // IMPORTANT: this should be "all" (lowercase) to match your PedalFilterId type
   const [selectedFilter, setSelectedFilter] = useState<PedalFilterId>('All');
 
-  /**
-   * Derive the base pedal list + heading/notice/emptyMessage from the URL param.
-   * This stays pure and is recomputed whenever `raw` changes.
-   */
-  const { pedals, heading, notice, emptyMessage, isCustom } = useMemo(() => {
-    let base: Pedal[] = [];
-    let headingLocal = 'All Pedals';
-    let noticeLocal: string | null = null;
-    let emptyLocal: string | null = null;
-    let isCustomLocal = false;
+  let basePedals: Pedal[] = [];
+  let heading = 'All Pedals';
+  let notice: string | null = null;
+  let emptyMessage: string | null = null;
 
-    if (!raw) {
-      // No search param → show all available
-      base = getAvailablePedals();
-      if (base.length === 0) {
-        emptyLocal =
-          'No pedals are currently available. Check back soon or browse all pedals.';
-      }
-    } else if (!isProductLine(raw)) {
-      // Unknown line → fall back to all + explain why
-      base = getAvailablePedals();
-      noticeLocal = `We don’t have a “${raw}” product line yet, so we’re showing all pedals instead.`;
-      if (base.length === 0) {
-        emptyLocal =
-          'No pedals are currently available. Check back soon or browse all pedals.';
-      }
-    } else {
-      // Valid product line
-      if (raw === 'Custom') {
-        // Special case: we want a static custom-order page instead of a grid
-        isCustomLocal = true;
-        base = [];
-        headingLocal = 'Custom Orders';
-      } else {
-        const productLine: ProductLine = raw;
-        base = getPedalsByProductLine(productLine);
-        headingLocal =
-          productLine === 'Tarot' ? 'Tarot Series' : `${productLine} Line`;
-
-        if (base.length === 0) {
-          emptyLocal = `No pedals are currently available in the ${productLine} line. Check back soon or browse all pedals.`;
-        }
-      }
+  // ── Decide basePedals + heading / messages from productLine ───────────────
+  if (!raw) {
+    // No search param → show all available
+    basePedals = getAvailablePedals();
+    if (basePedals.length === 0) {
+      emptyMessage =
+        'No pedals are currently available. Check back soon or browse all pedals.';
+    }
+  } else if (!isProductLine(raw)) {
+    // Unknown line → fall back to all + explain why
+    basePedals = getAvailablePedals();
+    notice = `We don’t have a “${raw}” product line yet, so we’re showing all pedals instead.`;
+    if (basePedals.length === 0) {
+      emptyMessage =
+        'No pedals are currently available. Check back soon or browse all pedals.';
+    }
+  } else {
+    // Valid line
+    if (raw === 'Custom') {
+      // Custom line gets a static info page instead of a grid
+      return (
+        <main className="mx-auto max-w-6xl px-4 py-10">
+          <CustomOrderInfo />
+        </main>
+      );
     }
 
-    return {
-      pedals: base,
-      heading: headingLocal,
-      notice: noticeLocal,
-      emptyMessage: emptyLocal,
-      isCustom: isCustomLocal
-    };
-  }, [raw]);
+    const productLine: ProductLine = raw;
+    basePedals = getPedalsByProductLine(productLine);
+    heading = productLine === 'Tarot' ? 'Tarot Series' : `${productLine} Line`;
 
-  /**
-   * Types to show in the filter bar.
-   * Right now this is "all available types on the site"; if you want per-line
-   * types only, we can later change this to derive from `pedals` instead.
-   */
-  const availableTypes = useMemo<PedalType[]>(
-    () => getAvailablePedalTypes(),
-    []
-  );
-
-  /**
-   * Apply the type filter on top of the base `pedals` list.
-   */
-  const visiblePedals = useMemo(() => {
-    if (selectedFilter === 'All') {
-      return pedals;
+    if (basePedals.length === 0) {
+      emptyMessage = `No pedals are currently available in the ${productLine} line. Check back soon or browse all pedals.`;
     }
-    return pedals.filter((pedal) => pedal.type === selectedFilter);
-  }, [pedals, selectedFilter]);
-
-  // ───────────────────── Custom line: static page ────────────────────────────
-  if (isCustom) {
-    return (
-      <main className="mx-auto max-w-6xl px-4 py-10">
-        <header className="mb-6">
-          <h1 className="text-sm font-semibold uppercase tracking-[0.18em]">
-            {heading}
-          </h1>
-        </header>
-        <CustomOrderInfo />
-      </main>
-    );
   }
 
-  // ───────────────────── Normal product grid view ────────────────────────────
+  // Types available across *current stock* (not just this line)
+  const availableTypes: PedalType[] = getAvailablePedalTypes();
+
+  // Apply type filter on top of the product line selection
+  const visiblePedals =
+    selectedFilter === 'All'
+      ? basePedals
+      : basePedals.filter((pedal) => pedal.type === selectedFilter);
+
   return (
     <main className="mx-auto max-w-6xl px-4 py-10">
       {/* Page heading + notice */}
@@ -126,9 +90,9 @@ export default function PedalsPage() {
         {notice && <p className="mt-2 text-xs text-destructive">{notice}</p>}
       </header>
 
-      {/* Filters only if there is something to filter */}
-      {pedals.length > 0 && (
-        <section className="mb-6">
+      {/* Filters (only if there is something to filter) */}
+      {basePedals.length > 0 && (
+        <section className="mb-6" aria-label="Filter pedals">
           <PedalFiltersBar
             selectedFilter={selectedFilter}
             onFilterChange={setSelectedFilter}
@@ -150,8 +114,11 @@ export default function PedalsPage() {
         </section>
       )}
 
-      {/* Grid – uses visiblePedals (after applying filter) */}
-      <section className="grid gap-12 sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
+      {/* Grid */}
+      <section
+        className="grid gap-12 sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3"
+        aria-label="Pedal results"
+      >
         {visiblePedals.map(
           ({ slug, name, priceCents, imageUrl, status, productLine }) => (
             <PedalGridItem
@@ -167,5 +134,23 @@ export default function PedalsPage() {
         )}
       </section>
     </main>
+  );
+}
+
+/**
+ * Default export: wraps the inner page in Suspense so Next is happy
+ * about useSearchParams during prerender.
+ */
+export default function PedalsPage() {
+  return (
+    <Suspense
+      fallback={
+        <main className="mx-auto max-w-6xl px-4 py-10">
+          <p className="text-xs text-muted-foreground">Loading pedals…</p>
+        </main>
+      }
+    >
+      <PedalsPageInner />
+    </Suspense>
   );
 }
