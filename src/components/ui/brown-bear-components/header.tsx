@@ -333,9 +333,9 @@ export default function Header() {
               }
               onBlur={(e) => {
                 // Close if focus is leaving the entire dropdown region
-                const menu = contactTriggerRef.current;
+                const menu = contactMenuRef.current;
                 if (menu && !menu.contains(e.relatedTarget as Node)) {
-                  setPedalsOpen(false);
+                  setContactOpen(false);
                 }
               }}
             >
