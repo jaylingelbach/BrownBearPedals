@@ -13,7 +13,7 @@ import { useMemo, useState } from 'react';
  */
 
 export default function Home() {
-  const [selectedFilter, setSelectedFilter] = useState<PedalFilterId>('all');
+  const [selectedFilter, setSelectedFilter] = useState<PedalFilterId>('All');
 
   const pedals = useMemo(
     () => getPedalsForFilter(selectedFilter),

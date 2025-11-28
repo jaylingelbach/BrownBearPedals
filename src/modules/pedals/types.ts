@@ -20,7 +20,7 @@ export type PedalType =
   | 'Buffers'
   | 'Amp Sim';
 
-export type PedalFilterId = 'all' | PedalType;
+export type PedalFilterId = 'All' | PedalType;
 
 export interface Pedal {
   slug: string;

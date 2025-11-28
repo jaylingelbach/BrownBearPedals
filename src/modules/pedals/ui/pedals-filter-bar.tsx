@@ -1,8 +1,9 @@
 'use client';
 
-import { PedalFilterId } from '../types';
+import { Pedal, PedalFilterId } from '../types';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+import { getAvailablePedals } from '../queries';
 
 interface PedalFiltersBarProps {
   selectedFilter: PedalFilterId;
@@ -11,7 +12,7 @@ interface PedalFiltersBarProps {
 
 type FilterOption = { id: PedalFilterId; label: string };
 const filterOptions: FilterOption[] = [
-  { id: 'all', label: 'All Products' },
+  { id: 'All', label: 'All Products' },
   { id: 'Overdrive', label: 'Overdrive' },
   { id: 'Distortion', label: 'Distortion' },
   { id: 'Fuzz', label: 'Fuzz' },
@@ -24,6 +25,12 @@ const filterOptions: FilterOption[] = [
   { id: 'Amp Sim', label: 'Amp Sim' }
 ];
 
+const currentStock: Pedal[] = getAvailablePedals();
+const uniqueTypes = Array.from(
+  new Set(currentStock.map((pedal) => pedal.type))
+);
+const filterIds: PedalFilterId[] = ['All', ...uniqueTypes];
+console.log(`uniqueTypes: ${uniqueTypes}`);
 /**
  * Renders a horizontal, responsive bar of filter buttons for pedal categories.
  *
@@ -37,22 +44,22 @@ export default function PedalFiltersBar(props: PedalFiltersBarProps) {
 
   return (
     <div className="flex flex-wrap gap-3">
-      {filterOptions.map((filter) => {
-        const isActive = filter.id === selectedFilter;
+      {filterIds.map((filter) => {
+        const isActive = filter === selectedFilter;
 
         return (
           <Button
-            key={filter.id}
+            key={filter}
             aria-pressed={isActive}
             size="lg"
             variant="link"
-            onClick={() => onFilterChange(filter.id)}
+            onClick={() => onFilterChange(filter)}
             className={cn(
               'bg-white transition-all duration-300 hover:scale-[1.18] text-muted-foreground hover:text-black',
               isActive && 'text-black underline scale-[1.18]'
             )}
           >
-            {filter.label}
+            {filter}
           </Button>
         );
       })}

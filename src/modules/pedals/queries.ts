@@ -74,7 +74,7 @@ export function getAvailablePedalsByType(type: PedalType): Pedal[] {
  */
 
 export function getPedalsForFilter(filter: PedalFilterId): Pedal[] {
-  if (filter === 'all') {
+  if (filter === 'All') {
     return getAvailablePedals();
   }
   return getAvailablePedals().filter((pedal) => pedal.type === filter);
