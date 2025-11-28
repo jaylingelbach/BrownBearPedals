@@ -1,4 +1,3 @@
-// TODO: Doc strings
 export type ProductStatus = 'available' | 'sold' | 'coming_soon';
 
 export type ProductLine =
