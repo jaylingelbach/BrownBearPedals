@@ -279,6 +279,7 @@ export default function Header() {
                     href="/pedals"
                     role="menuitem"
                     className={dropDownItemClass}
+                    onClick={() => setPedalsOpen(false)}
                   >
                     All Pedals
                   </Link>
@@ -288,6 +289,7 @@ export default function Header() {
                     href="/pedals?productLine=Tarot"
                     role="menuitem"
                     className={dropDownItemClass}
+                    onClick={() => setPedalsOpen(false)}
                   >
                     Tarot Series
                   </Link>
@@ -297,6 +299,7 @@ export default function Header() {
                     href="/pedals?productLine=Limited"
                     role="menuitem"
                     className={dropDownItemClass}
+                    onClick={() => setPedalsOpen(false)}
                   >
                     Limited Release
                   </Link>
@@ -306,6 +309,7 @@ export default function Header() {
                     href="/pedals?productLine=Custom"
                     role="menuitem"
                     className={dropDownItemClass}
+                    onClick={() => setPedalsOpen(false)}
                   >
                     Custom Order
                   </Link>
@@ -384,6 +388,7 @@ export default function Header() {
                     href="/contact"
                     role="menuitem"
                     className={dropDownItemClass}
+                    onClick={() => setContactOpen(false)}
                   >
                     Contact Us
                   </Link>
@@ -393,6 +398,7 @@ export default function Header() {
                     href="/support"
                     role="menuitem"
                     className={dropDownItemClass}
+                    onClick={() => setContactOpen(false)}
                   >
                     Support
                   </Link>
@@ -402,6 +408,7 @@ export default function Header() {
                     href="/faq"
                     role="menuitem"
                     className={dropDownItemClass}
+                    onClick={() => setContactOpen(false)}
                   >
                     FAQ
                   </Link>
