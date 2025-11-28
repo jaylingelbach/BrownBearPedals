@@ -36,8 +36,11 @@ export default function Header() {
     'hover:text-foreground hover:underline ' +
     'focus-visible:outline-none focus-visible:underline';
 
-  const isActive = (href: string) =>
-    href === '/' ? pathname === '/' : pathname.startsWith(href);
+  const isActive = (href: string) => {
+    // Extract the pathname portion from href (strip query params)
+    const hrefPath = href.split('?')[0];
+    return hrefPath === '/' ? pathname === '/' : pathname.startsWith(hrefPath);
+  };
 
   // ── Keyboard helpers for desktop menus ────────────────────────────────────
 
@@ -252,6 +255,7 @@ export default function Header() {
                   ? 'opacity-100 visible translate-y-0'
                   : 'opacity-0 invisible translate-y-1'
               )}
+              aria-hidden={!pedalsOpen}
             >
               <ul
                 id="pedals-menu"
@@ -353,6 +357,7 @@ export default function Header() {
                   ? 'opacity-100 visible translate-y-0'
                   : 'opacity-0 invisible translate-y-1'
               )}
+              aria-hidden={!contactOpen}
             >
               <ul
                 id="contact-menu"
