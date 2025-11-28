@@ -17,9 +17,15 @@ interface PedalGridItemProps {
 }
 
 /**
- * Render a clickable product tile for a pedal showing its image, title, and either the price or a "Sold out" label.
+ * Render a clickable product tile for a pedal displaying its image, optional product line, title, and either price or a "Sold out" label.
  *
- * @param props - Component props including `slug`, `name`, `priceCents`, `imageUrl`, `status`, and optional `className`.
+ * @param props - Component props.
+ * @param props.slug - URL-safe identifier used to build the pedal detail link.
+ * @param props.priceCents - Price of the pedal in cents.
+ * @param props.imageUrl - Source URL for the pedal image.
+ * @param props.status - Product availability status (e.g., `"sold"` for sold-out items).
+ * @param props.productLine - Optional product line; when equal to `"Tarot"` it is displayed as "Tarot Series".
+ * @param props.className - Optional additional CSS class names applied to the root link.
  * @returns The React element for the pedal grid item.
  */
 

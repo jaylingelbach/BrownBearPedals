@@ -1,5 +1,12 @@
 import Link from 'next/link';
 
+/**
+ * Render a content block describing the custom pedal ordering process, including steps, timing/pricing notes, and calls to action.
+ *
+ * The component outputs a styled section with an eyebrow/title, an ordered "How it works" list of four steps, a brief timing and pricing note, and primary/secondary links for contacting or browsing current pedals.
+ *
+ * @returns The root JSX element for the custom-order information section.
+ */
 export function CustomOrderInfo() {
   return (
     <section className="mx-auto max-w-3xl space-y-6 rounded-xl border border-border bg-background/60 px-6 py-8">
