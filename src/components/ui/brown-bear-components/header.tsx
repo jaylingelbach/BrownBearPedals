@@ -428,14 +428,20 @@ export default function Header() {
           <div className="mx-auto max-w-6xl space-y-4 px-4 py-4">
             <Link
               href="/about"
-              className="block py-2 text-sm uppercase tracking-tight text-muted-foreground"
+              className={cn(
+                'block py-2 text-sm uppercase tracking-tight text-muted-foreground',
+                isActive('/about') && 'text-foreground font-semibold'
+              )}
               onClick={() => setMobileOpen(false)}
             >
               About
             </Link>
             <Link
               href="/merch"
-              className="block py-2 text-sm uppercase tracking-tight text-muted-foreground"
+              className={cn(
+                'block py-2 text-sm uppercase tracking-tight text-muted-foreground',
+                isActive('/merch') && 'text-foreground font-semibold'
+              )}
               onClick={() => setMobileOpen(false)}
             >
               Merch
@@ -448,28 +454,43 @@ export default function Header() {
               <div className="mt-1 space-y-1">
                 <Link
                   href="/pedals"
-                  className="block py-1 text-xs uppercase tracking-tight text-muted-foreground"
+                  className={cn(
+                    'block py-2 text-sm uppercase tracking-tight text-muted-foreground',
+                    isActive('/pedals') && 'text-foreground font-semibold'
+                  )}
                   onClick={() => setMobileOpen(false)}
                 >
                   All Pedals
                 </Link>
                 <Link
                   href="/pedals?productLine=Tarot"
-                  className="block py-1 text-xs uppercase tracking-tight text-muted-foreground"
+                  className={cn(
+                    'block py-2 text-sm uppercase tracking-tight text-muted-foreground',
+                    isActive('/pedals?productLine=Tarot') &&
+                      'text-foreground font-semibold'
+                  )}
                   onClick={() => setMobileOpen(false)}
                 >
                   Tarot Series
                 </Link>
                 <Link
                   href="/pedals?productLine=Limited"
-                  className="block py-1 text-xs uppercase tracking-tight text-muted-foreground"
+                  className={cn(
+                    'block py-2 text-sm uppercase tracking-tight text-muted-foreground',
+                    isActive('/pedals?productLine=Limited') &&
+                      'text-foreground font-semibold'
+                  )}
                   onClick={() => setMobileOpen(false)}
                 >
                   Limited Release
                 </Link>
                 <Link
                   href="/pedals?productLine=Custom"
-                  className="block py-1 text-xs uppercase tracking-tight text-muted-foreground"
+                  className={cn(
+                    'block py-2 text-sm uppercase tracking-tight text-muted-foreground',
+                    isActive('/pedals?productLine=Custom') &&
+                      'text-foreground font-semibold'
+                  )}
                   onClick={() => setMobileOpen(false)}
                 >
                   Custom Order
@@ -484,21 +505,30 @@ export default function Header() {
               <div className="mt-1 space-y-1">
                 <Link
                   href="/contact"
-                  className="block py-1 text-xs uppercase tracking-tight text-muted-foreground"
+                  className={cn(
+                    'block py-2 text-sm uppercase tracking-tight text-muted-foreground',
+                    isActive('/contact') && 'text-foreground font-semibold'
+                  )}
                   onClick={() => setMobileOpen(false)}
                 >
                   Contact Us
                 </Link>
                 <Link
                   href="/support"
-                  className="block py-1 text-xs uppercase tracking-tight text-muted-foreground"
+                  className={cn(
+                    'block py-2 text-sm uppercase tracking-tight text-muted-foreground',
+                    isActive('/support') && 'text-foreground font-semibold'
+                  )}
                   onClick={() => setMobileOpen(false)}
                 >
                   Support
                 </Link>
                 <Link
                   href="/faq"
-                  className="block py-1 text-xs uppercase tracking-tight text-muted-foreground"
+                  className={cn(
+                    'block py-2 text-sm uppercase tracking-tight text-muted-foreground',
+                    isActive('/faq') && 'text-foreground font-semibold'
+                  )}
                   onClick={() => setMobileOpen(false)}
                 >
                   FAQ
