@@ -36,6 +36,17 @@ const merchItems: MerchItem[] = [
   }
 ];
 
+/**
+ * Renders a single merchandise card displaying image, name, optional description, price, and a purchase link.
+ *
+ * @param props - The merch item properties.
+ *   - id: Unique identifier for the item.
+ *   - name: Item display name.
+ *   - priceCents: Price in cents (used for formatting).
+ *   - imageSrc: Image source URL for the item.
+ *   - description: Optional short description displayed under the name.
+ * @returns The JSX element for the merch grid item.
+ */
 function MerchGridItem(props: MerchItem) {
   const { name, priceCents, imageSrc, description } = props;
 
