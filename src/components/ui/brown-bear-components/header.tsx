@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import type { KeyboardEvent } from 'react';
 
 import { cn } from '@/lib/utils';
@@ -21,17 +21,25 @@ export default function Header() {
   const contactTriggerRef = useRef<HTMLButtonElement | null>(null);
   const contactMenuRef = useRef<HTMLUListElement | null>(null);
 
+  // Mobile menu refs
+  const mobileToggleRef = useRef<HTMLButtonElement | null>(null);
+  const mobileMenuRef = useRef<HTMLDivElement | null>(null);
+  const wasMobileOpenRef = useRef(false);
+
   const baseNavItemClasses =
     'whitespace-nowrap text-xs font-medium tracking-tight uppercase text-muted-foreground ' +
     'focus-visible:outline-none focus-visible:underline';
 
+  // keep CodeRabbit’s suggested tweaks
   const dropDownItemClass =
-    'block px-1 py-1 text-xs uppercase tracking-tight text-muted-foreground hover:text-foreground hover:underline';
+    'block px-1 py-1 text-xs uppercase tracking-tight text-muted-foreground ' +
+    'hover:text-foreground hover:underline ' +
+    'focus-visible:outline-none focus-visible:underline';
 
   const isActive = (href: string) =>
     href === '/' ? pathname === '/' : pathname.startsWith(href);
 
-  // ── Keyboard helpers for menus ────────────────────────────────────────────
+  // ── Keyboard helpers for desktop menus ────────────────────────────────────
 
   function focusFirstMenuItem(menuRef: typeof pedalsMenuRef) {
     const firstLink =
@@ -102,6 +110,63 @@ export default function Header() {
         setOpen(true);
       }
       setTimeout(() => focusFirstMenuItem(menuRef), 0);
+    }
+  }
+
+  // ── Mobile menu: focus management & focus trap ────────────────────────────
+
+  useEffect(() => {
+    if (mobileOpen) {
+      const panel = mobileMenuRef.current;
+      if (!panel) {
+        wasMobileOpenRef.current = true;
+        return;
+      }
+
+      const firstFocusable = panel.querySelector<HTMLElement>(
+        'a, button, [tabindex]:not([tabindex="-1"])'
+      );
+      firstFocusable?.focus();
+      wasMobileOpenRef.current = true;
+    } else if (wasMobileOpenRef.current) {
+      // only restore focus if it was actually open
+      mobileToggleRef.current?.focus();
+      wasMobileOpenRef.current = false;
+    }
+  }, [mobileOpen]);
+
+  function handleMobilePanelKeyDown(event: KeyboardEvent<HTMLDivElement>) {
+    if (event.key === 'Escape') {
+      event.preventDefault();
+      setMobileOpen(false);
+      return;
+    }
+
+    if (event.key !== 'Tab') return;
+
+    const panel = mobileMenuRef.current;
+    if (!panel) return;
+
+    const focusable = Array.from(
+      panel.querySelectorAll<HTMLElement>(
+        'a, button, [tabindex]:not([tabindex="-1"])'
+      )
+    ).filter((el) => !el.hasAttribute('disabled'));
+
+    if (focusable.length === 0) return;
+
+    const firstEl = focusable[0];
+    const lastEl = focusable[focusable.length - 1];
+    const current = document.activeElement as HTMLElement | null;
+
+    if (!event.shiftKey && current === lastEl) {
+      // Tab on last item wraps to first
+      event.preventDefault();
+      firstEl.focus();
+    } else if (event.shiftKey && current === firstEl) {
+      // Shift+Tab on first item wraps to last
+      event.preventDefault();
+      lastEl.focus();
     }
   }
 
@@ -323,9 +388,11 @@ export default function Header() {
 
         {/* Mobile hamburger (md and down) */}
         <button
+          ref={mobileToggleRef}
           type="button"
           className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-border md:hidden"
           aria-label="Toggle navigation"
+          aria-controls="mobile-nav"
           aria-expanded={mobileOpen}
           onClick={() => setMobileOpen((prev) => !prev)}
         >
@@ -336,11 +403,13 @@ export default function Header() {
         </button>
       </nav>
 
-      {/* Mobile menu panel (unchanged) */}
+      {/* Mobile menu panel */}
       {mobileOpen && (
         <div
+          ref={mobileMenuRef}
           className="border-t border-border bg-background md:hidden"
           id="mobile-nav"
+          onKeyDown={handleMobilePanelKeyDown}
         >
           <div className="mx-auto max-w-6xl space-y-4 px-4 py-4">
             <Link
