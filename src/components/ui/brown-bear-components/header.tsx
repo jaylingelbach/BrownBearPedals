@@ -202,7 +202,7 @@ export default function Header() {
         >
           {/* Circular badge / logo */}
           {/* Circular logo from file */}
-          <span className="flex h-20 w-20 items-center justify-center rounded-full border border-borderbg-amber-50/80 shadow-sm overflow-hidden transition-transform duration-150 group-hover:scale-105">
+          <span className="flex h-20 w-20 items-center justify-center rounded-full border border-border bg-amber-50/80 shadow-sm overflow-hidden transition-transform duration-150 group-hover:scale-105">
             <Image
               src="/BrownBearLogo.png" // path in /public
               alt="Brown Bear Pedals logo"
