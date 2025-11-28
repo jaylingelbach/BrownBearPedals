@@ -76,7 +76,7 @@ export function CustomOrderInfo() {
       <section className="flex flex-wrap items-center gap-3 pt-2">
         <Link
           href="/contact"
-          className="inline-flex items-center justify-center rounded-full border border-border bg-foreground px-5 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-background transition hover:opacity-90"
+          className="inline-flex items-center justify-center rounded-full border border-border bg-foreground px-5 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-background transition hover:opacity-90 hover:scale-105 hover:bg-pink-500 hover:text-black"
         >
           Start a custom request
         </Link>
