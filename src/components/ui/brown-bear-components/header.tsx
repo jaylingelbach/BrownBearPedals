@@ -228,6 +228,13 @@ export default function Header() {
                   pedalsMenuRef
                 )
               }
+              onBlur={(e) => {
+                // Close if focus is leaving the entire dropdown region
+                const menu = pedalsMenuRef.current;
+                if (menu && !menu.contains(e.relatedTarget as Node)) {
+                  setPedalsOpen(false);
+                }
+              }}
             >
               Pedals
             </button>
@@ -324,6 +331,13 @@ export default function Header() {
                   contactMenuRef
                 )
               }
+              onBlur={(e) => {
+                // Close if focus is leaving the entire dropdown region
+                const menu = contactTriggerRef.current;
+                if (menu && !menu.contains(e.relatedTarget as Node)) {
+                  setPedalsOpen(false);
+                }
+              }}
             >
               Contact
             </button>
