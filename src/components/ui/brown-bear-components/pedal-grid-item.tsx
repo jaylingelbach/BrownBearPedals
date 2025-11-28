@@ -15,6 +15,13 @@ interface PedalGridItemProps {
   className?: string;
 }
 
+/**
+ * Render a clickable product tile for a pedal showing its image, title, and either the price or a "Sold out" label.
+ *
+ * @param props - Component props including `slug`, `name`, `priceCents`, `imageUrl`, `status`, and optional `className`.
+ * @returns The React element for the pedal grid item.
+ */
+
 export function PedalGridItem(props: PedalGridItemProps) {
   const { slug, name, priceCents, imageUrl, status, className } = props;
   const isSold = status === 'sold';

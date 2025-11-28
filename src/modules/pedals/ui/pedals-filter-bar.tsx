@@ -24,6 +24,14 @@ const filterOptions: FilterOption[] = [
   { id: 'Amp Sim', label: 'Amp Sim' }
 ];
 
+/**
+ * Renders a horizontal, responsive bar of filter buttons for pedal categories.
+ *
+ * @param props.selectedFilter - Currently active filter id; the corresponding button is styled and exposed via `aria-pressed`.
+ * @param props.onFilterChange - Callback invoked with the selected filter id when a button is clicked.
+ * @returns A React element containing the row of filter buttons.
+ */
+
 export default function PedalFiltersBar(props: PedalFiltersBarProps) {
   const { selectedFilter, onFilterChange } = props;
 
