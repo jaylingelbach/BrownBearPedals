@@ -13,6 +13,7 @@ interface PedalGridItemProps {
   imageUrl: string;
   status: ProductStatus;
   className?: string;
+  productLine?: string;
 }
 
 /**
@@ -23,7 +24,8 @@ interface PedalGridItemProps {
  */
 
 export function PedalGridItem(props: PedalGridItemProps) {
-  const { slug, name, priceCents, imageUrl, status, className } = props;
+  const { slug, name, priceCents, imageUrl, status, className, productLine } =
+    props;
   const isSold = status === 'sold';
 
   return (
@@ -48,10 +50,18 @@ export function PedalGridItem(props: PedalGridItemProps) {
         </div>
       </div>
 
+      {/* Text underneath */}
       <div className="flex flex-col items-center gap-1 text-center">
+        {productLine && (
+          <span className="text-[0.65rem] uppercase tracking-[0.18em] text-muted-foreground">
+            {productLine === 'Tarot' ? 'Tarot Series' : productLine}
+          </span>
+        )}
+
         <h2 className="text-sm font-medium tracking-tight text-foreground uppercase">
           {name}
         </h2>
+
         <p className="text-xs text-muted-foreground">
           {isSold ? 'Sold out' : formatPrice(priceCents)}
         </p>

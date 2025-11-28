@@ -188,8 +188,37 @@ export default function Header() {
         aria-label="Main navigation"
       >
         {/* Left: brand / logo */}
-        <Link href="/" className="text-sm font-semibold tracking-tight">
-          Brown Bear Pedals
+        <Link
+          href="/"
+          className="flex items-center gap-3 group"
+          aria-label="Brown Bear Effects home"
+        >
+          {/* Circular badge / logo */}
+          <span
+            className="
+      flex h-9 w-9 items-center justify-center
+      rounded-full border border-border
+      bg-amber-50/80 text-xs font-semibold
+      shadow-sm
+      transition-transform duration-150 group-hover:scale-105
+    "
+          >
+            <span className="mr-0.5">🐻</span>
+            <span className="tracking-tight">BB</span>
+          </span>
+
+          {/* Wordmark */}
+          <span className="flex flex-col leading-tight">
+            <span className="text-[0.75rem] font-semibold uppercase tracking-[0.35em]">
+              Brown&nbsp;Bear
+            </span>
+            <span className="mt-0.5 flex items-center gap-2">
+              <span className="h-px w-4 rounded-full bg-amber-400 transition-all duration-150 group-hover:w-6" />
+              <span className="text-[0.6rem] uppercase tracking-[0.3em] text-muted-foreground">
+                Effects
+              </span>
+            </span>
+          </span>
         </Link>
 
         {/* Desktop nav (hidden on small screens) */}

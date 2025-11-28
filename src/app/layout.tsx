@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import Header from '@/components/ui/brown-bear-components/header';
 import './globals.css';
+import { Toaster } from 'sonner';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -14,7 +15,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'Brown Bear Pedals',
+  title: 'Brown Bear Effects',
   description: 'Handcrafted guitar effects pedals'
 };
 
@@ -37,6 +38,7 @@ export default function RootLayout({
       >
         <Header />
         {children}
+        <Toaster />
       </body>
     </html>
   );

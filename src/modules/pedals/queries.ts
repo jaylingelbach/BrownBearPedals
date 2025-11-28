@@ -24,7 +24,7 @@ export function getPedalsByStatus(status: ProductStatus): Pedal[] {
 
 /**
  * Convenience helper for just "available" pedals,
- * which is what your /pedals grid will probably use.
+ * which is what your /pedals grid uses.
  */
 export function getAvailablePedals(): Pedal[] {
   return getPedalsByStatus('available');
@@ -64,6 +64,21 @@ export function getPedalsByType(type: PedalType): Pedal[] {
  */
 export function getAvailablePedalsByType(type: PedalType): Pedal[] {
   return getAvailablePedals().filter((pedal) => pedal.type === type);
+}
+
+/**
+ * Return all pedal *types* that currently exist in available stock.
+ * (Used to drive the filter bar options.)
+ */
+export function getAvailablePedalTypes(): PedalType[] {
+  const available = getAvailablePedals();
+  const typeSet = new Set<PedalType>();
+
+  for (const pedal of available) {
+    typeSet.add(pedal.type);
+  }
+
+  return Array.from(typeSet);
 }
 
 /**

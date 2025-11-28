@@ -1,50 +1,45 @@
 'use client';
 
-import { Pedal, PedalFilterId } from '../types';
+import { useMemo } from 'react';
 import { Button } from '@/components/ui/button';
-import { cn } from '@/lib/utils';
-import { getAvailablePedals } from '../queries';
+import type { PedalFilterId, PedalType } from '../types';
 
 interface PedalFiltersBarProps {
   selectedFilter: PedalFilterId;
   onFilterChange: (nextFilter: PedalFilterId) => void;
+  availableTypes: PedalType[];
 }
 
-const currentStock: Pedal[] = getAvailablePedals();
-// Get unique types
-const uniqueTypes = Array.from(
-  new Set(currentStock.map((pedal) => pedal.type))
-);
-const filterIds: PedalFilterId[] = ['All', ...uniqueTypes];
-/**
- * Renders a horizontal, responsive bar of filter buttons for pedal categories.
- *
- * @param props.selectedFilter - Currently active filter id; the corresponding button is styled and exposed via `aria-pressed`.
- * @param props.onFilterChange - Callback invoked with the selected filter id when a button is clicked.
- * @returns A React element containing the row of filter buttons.
- */
+type FilterOption = { id: PedalFilterId; label: string };
 
 export default function PedalFiltersBar(props: PedalFiltersBarProps) {
-  const { selectedFilter, onFilterChange } = props;
+  const { selectedFilter, onFilterChange, availableTypes } = props;
+
+  const filterOptions = useMemo<FilterOption[]>(() => {
+    const base: FilterOption[] = [{ id: 'All', label: 'All Products' }];
+
+    const typeOptions: FilterOption[] = availableTypes.map((type) => ({
+      id: type,
+      label: type
+    }));
+
+    return [...base, ...typeOptions];
+  }, [availableTypes]);
 
   return (
     <div className="flex flex-wrap gap-3">
-      {filterIds.map((filter) => {
-        const isActive = filter === selectedFilter;
+      {filterOptions.map((option) => {
+        const isActive = option.id === selectedFilter;
 
         return (
           <Button
-            key={filter}
-            aria-pressed={isActive}
+            key={option.id}
+            aria-label={option.label}
             size="lg"
-            variant="link"
-            onClick={() => onFilterChange(filter)}
-            className={cn(
-              'bg-white transition-all duration-300 hover:scale-[1.18] text-muted-foreground hover:text-black',
-              isActive && 'text-black underline scale-[1.18]'
-            )}
+            variant={isActive ? 'outline' : 'ghost'}
+            onClick={() => onFilterChange(option.id)}
           >
-            {filter}
+            {option.label}
           </Button>
         );
       })}

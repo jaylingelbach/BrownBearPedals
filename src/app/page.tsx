@@ -1,8 +1,11 @@
 'use client';
 
 import { PedalGridItem } from '@/components/ui/brown-bear-components/pedal-grid-item';
-import { getPedalsForFilter } from '@/modules/pedals/queries';
-import { PedalFilterId } from '@/modules/pedals/types';
+import {
+  getAvailablePedalTypes,
+  getPedalsForFilter
+} from '@/modules/pedals/queries';
+import { PedalFilterId, PedalType } from '@/modules/pedals/types';
 import PedalFiltersBar from '@/modules/pedals/ui/pedals-filter-bar';
 import { useMemo, useState } from 'react';
 
@@ -14,6 +17,11 @@ import { useMemo, useState } from 'react';
 
 export default function Home() {
   const [selectedFilter, setSelectedFilter] = useState<PedalFilterId>('All');
+
+  const availableTypes = useMemo<PedalType[]>(
+    () => getAvailablePedalTypes(),
+    []
+  );
 
   const pedals = useMemo(
     () => getPedalsForFilter(selectedFilter),
@@ -27,6 +35,7 @@ export default function Home() {
         <PedalFiltersBar
           selectedFilter={selectedFilter}
           onFilterChange={setSelectedFilter}
+          availableTypes={availableTypes}
         />
       </section>
       <section
