@@ -1,3 +1,10 @@
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Support',
+  description: 'Get help with your Brown Bear Pedals order.'
+};
+
 export default function Page() {
   return (
     <div className="flex justify-center text-2xl">
