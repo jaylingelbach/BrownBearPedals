@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
@@ -35,8 +36,8 @@ export default function Header() {
   const wasMobileOpenRef = useRef(false);
 
   const baseNavItemClasses =
-    'whitespace-nowrap text-xs font-medium tracking-tight uppercase text-muted-foreground ' +
-    'focus-visible:outline-none focus-visible:underline';
+    'whitespace-nowrap text-md font-medium tracking-tight uppercase text-muted-foreground ' +
+    'transition-transform duration-700 focus-visible:outline-none focus-visible:underline hover:scale-115';
 
   // keep CodeRabbit’s suggested tweaks
   const dropDownItemClass =
@@ -200,17 +201,16 @@ export default function Header() {
           aria-label="Brown Bear Effects home"
         >
           {/* Circular badge / logo */}
-          <span
-            className="
-              flex h-9 w-9 items-center justify-center
-              rounded-full border border-border
-              bg-amber-50/80 text-xs font-semibold
-              shadow-sm
-              transition-transform duration-150 group-hover:scale-105
-            "
-          >
-            <span className="mr-0.5">🐻</span>
-            <span className="tracking-tight">BB</span>
+          {/* Circular logo from file */}
+          <span className="flex h-20 w-20 items-center justify-center rounded-full border border-borderbg-amber-50/80 shadow-sm overflow-hidden transition-transform duration-150 group-hover:scale-105">
+            <Image
+              src="/BrownBearLogo.png" // path in /public
+              alt="Brown Bear Pedals logo"
+              width={120}
+              height={120} // ~ h-9 / w-9
+              className="object-cover"
+              priority
+            />
           </span>
 
           {/* Wordmark */}
