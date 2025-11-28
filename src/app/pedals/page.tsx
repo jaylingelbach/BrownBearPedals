@@ -7,7 +7,6 @@ import { useSearchParams } from 'next/navigation';
 import { PedalGridItem } from '@/components/ui/brown-bear-components/pedal-grid-item';
 import {
   getAvailablePedals,
-  getAvailablePedalTypes,
   getPedalsByProductLine
 } from '@/modules/pedals/queries';
 import type {
