@@ -11,11 +11,11 @@ interface PedalFiltersBarProps {
 }
 
 const currentStock: Pedal[] = getAvailablePedals();
+// Get unique types
 const uniqueTypes = Array.from(
   new Set(currentStock.map((pedal) => pedal.type))
 );
 const filterIds: PedalFilterId[] = ['All', ...uniqueTypes];
-console.log(`uniqueTypes: ${uniqueTypes}`);
 /**
  * Renders a horizontal, responsive bar of filter buttons for pedal categories.
  *
