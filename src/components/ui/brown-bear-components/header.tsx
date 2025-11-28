@@ -243,7 +243,10 @@ export default function Header() {
             </button>
 
             {/* hover bridge */}
-            <div className="absolute left-1/2 top-full h-3 w-24 -translate-x-1/2" />
+            <div
+              className="absolute left-1/2 top-full h-3 w-24 -translate-x-1/2"
+              aria-hidden="true"
+            />
 
             {/* container div handles positioning/animation */}
             <div
@@ -346,7 +349,10 @@ export default function Header() {
               Contact
             </button>
 
-            <div className="absolute left-1/2 top-full h-3 w-24 -translate-x-1/2" />
+            <div
+              className="absolute left-1/2 top-full h-3 w-24 -translate-x-1/2"
+              aria-hidden="true"
+            />
 
             <div
               className={cn(
