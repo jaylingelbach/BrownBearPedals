@@ -71,8 +71,10 @@ function PedalsPageInner() {
     }
   }
 
-  // Types available across *current stock* (not just this line)
-  const availableTypes: PedalType[] = getAvailablePedalTypes();
+  // Types available in the current product line (or all pedals if no line selected)
+  const availableTypes: PedalType[] = Array.from(
+    new Set(basePedals.map((pedal) => pedal.type))
+  );
 
   // Apply type filter on top of the product line selection
   const visiblePedals =
