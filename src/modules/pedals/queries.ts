@@ -57,22 +57,37 @@ export function getPedalsByType(type: PedalType): Pedal[] {
 /**
  * Filter by available pedals and type
  * (e.g. "Overdrive", "Fuzz", etc.)
+ * Get available pedals matching the given pedal type.
+ *
+ * @param type - The pedal type to filter by (e.g., "Overdrive", "Fuzz")
+ * @returns An array of pedals whose status is `'available'` and whose `type` equals `type`
  */
 export function getAvailablePedalsByType(type: PedalType): Pedal[] {
   return getAvailablePedals().filter((pedal) => pedal.type === type);
 }
 
-// TODO: Doc strings
+/**
+ * Returns available pedals matching the provided filter.
+ *
+ * @param filter - `'All'` to return all available pedals, otherwise a pedal type used to filter available pedals.
+ * @returns An array of available pedals that match the filter.
+ */
+
 export function getPedalsForFilter(filter: PedalFilterId): Pedal[] {
-  if (filter === 'all') {
-    return getAvailablePedals();
-  }
-  return getAvailablePedals().filter((pedal) => pedal.type === filter);
+  const available = getAvailablePedals();
+
+  return filter === 'All'
+    ? available
+    : available.filter((pedal) => pedal.type === filter);
 }
 
 /**
  * Find all pedals in a line
  * (e.g. "Tarot", "Limited", "Custom" etc.)
+ * Get pedals belonging to the specified product line.
+ *
+ * @param productLine - The product line to filter by (e.g., "Tarot", "Limited", "Custom").
+ * @returns An array of pedals whose `productLine` strictly equals the provided product line.
  */
 export function getPedalsByProductLine(productLine: ProductLine): Pedal[] {
   return pedals.filter((pedal) => pedal.productLine === productLine);

@@ -1,4 +1,3 @@
-// TODO: Doc strings
 export type ProductStatus = 'available' | 'sold' | 'coming_soon';
 
 export type ProductLine =
@@ -20,7 +19,7 @@ export type PedalType =
   | 'Buffers'
   | 'Amp Sim';
 
-export type PedalFilterId = 'all' | PedalType;
+export type PedalFilterId = 'All' | PedalType;
 
 export interface Pedal {
   slug: string;

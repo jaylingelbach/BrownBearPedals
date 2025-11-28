@@ -7,6 +7,14 @@ import type { KeyboardEvent } from 'react';
 
 import { cn } from '@/lib/utils';
 
+/**
+ * Render the site header with brand, desktop navigation (accessible dropdowns for Pedals and Contact), and a mobile navigation panel.
+ *
+ * The header includes active-link highlighting, keyboard-accessible dropdown menus with focus management, and a toggleable mobile menu with a focus trap.
+ *
+ * @returns The header JSX element containing site navigation, dropdown menus, and the mobile navigation panel.
+ */
+
 export default function Header() {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
