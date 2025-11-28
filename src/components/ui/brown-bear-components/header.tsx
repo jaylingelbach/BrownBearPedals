@@ -36,8 +36,8 @@ export default function Header() {
   const wasMobileOpenRef = useRef(false);
 
   const baseNavItemClasses =
-    'whitespace-nowrap text-md font-medium tracking-tight uppercase text-muted-foreground ' +
-    'transition-transform duration-700 focus-visible:outline-none focus-visible:underline hover:scale-115';
+    'whitespace-nowrap text-base font-medium tracking-tight uppercase text-muted-foreground ' +
+    'transition-transform duration-700 focus-visible:outline-none focus-visible:underline hover:scale-110';
 
   // keep CodeRabbit’s suggested tweaks
   const dropDownItemClass =
