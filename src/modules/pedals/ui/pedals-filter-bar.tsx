@@ -10,21 +10,6 @@ interface PedalFiltersBarProps {
   onFilterChange: (nextFilter: PedalFilterId) => void;
 }
 
-type FilterOption = { id: PedalFilterId; label: string };
-const filterOptions: FilterOption[] = [
-  { id: 'All', label: 'All Products' },
-  { id: 'Overdrive', label: 'Overdrive' },
-  { id: 'Distortion', label: 'Distortion' },
-  { id: 'Fuzz', label: 'Fuzz' },
-  { id: 'Delay', label: 'Delay' },
-  { id: 'Modulation', label: 'Modulation' },
-  { id: 'Boost', label: 'Boost' },
-  { id: 'Preamp', label: 'Preamp' },
-  { id: 'Utility', label: 'Utility' },
-  { id: 'Buffers', label: 'Buffers' },
-  { id: 'Amp Sim', label: 'Amp Sim' }
-];
-
 const currentStock: Pedal[] = getAvailablePedals();
 const uniqueTypes = Array.from(
   new Set(currentStock.map((pedal) => pedal.type))

@@ -69,7 +69,7 @@ export function getAvailablePedalsByType(type: PedalType): Pedal[] {
 /**
  * Returns available pedals matching the provided filter.
  *
- * @param filter - `'all'` to return all available pedals, otherwise a pedal type used to filter available pedals.
+ * @param filter - `'All'` to return all available pedals, otherwise a pedal type used to filter available pedals.
  * @returns An array of available pedals that match the filter.
  */
 
