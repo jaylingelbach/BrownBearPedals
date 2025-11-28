@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
 import { formatPrice } from '@/lib/money/utils';
-import type { ProductStatus } from '@/modules/pedals/types';
+import type { ProductLine, ProductStatus } from '@/modules/pedals/types';
 
 interface PedalGridItemProps {
   slug: string;
@@ -13,17 +13,25 @@ interface PedalGridItemProps {
   imageUrl: string;
   status: ProductStatus;
   className?: string;
+  productLine?: ProductLine;
 }
 
 /**
- * Render a clickable product tile for a pedal showing its image, title, and either the price or a "Sold out" label.
+ * Render a clickable product tile for a pedal displaying its image, optional product line, title, and either price or a "Sold out" label.
  *
- * @param props - Component props including `slug`, `name`, `priceCents`, `imageUrl`, `status`, and optional `className`.
+ * @param props - Component props.
+ * @param props.slug - URL-safe identifier used to build the pedal detail link.
+ * @param props.priceCents - Price of the pedal in cents.
+ * @param props.imageUrl - Source URL for the pedal image.
+ * @param props.status - Product availability status (e.g., `"sold"` for sold-out items).
+ * @param props.productLine - Optional product line; when equal to `"Tarot"` it is displayed as "Tarot Series".
+ * @param props.className - Optional additional CSS class names applied to the root link.
  * @returns The React element for the pedal grid item.
  */
 
 export function PedalGridItem(props: PedalGridItemProps) {
-  const { slug, name, priceCents, imageUrl, status, className } = props;
+  const { slug, name, priceCents, imageUrl, status, className, productLine } =
+    props;
   const isSold = status === 'sold';
 
   return (
@@ -48,10 +56,18 @@ export function PedalGridItem(props: PedalGridItemProps) {
         </div>
       </div>
 
+      {/* Text underneath */}
       <div className="flex flex-col items-center gap-1 text-center">
+        {productLine && (
+          <span className="text-[0.65rem] uppercase tracking-[0.18em] text-muted-foreground">
+            {productLine === 'Tarot' ? 'Tarot Series' : productLine}
+          </span>
+        )}
+
         <h2 className="text-sm font-medium tracking-tight text-foreground uppercase">
           {name}
         </h2>
+
         <p className="text-xs text-muted-foreground">
           {isSold ? 'Sold out' : formatPrice(priceCents)}
         </p>

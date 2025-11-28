@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'Brown Bear Pedals',
+  title: 'Brown Bear Effects',
   description: 'Handcrafted guitar effects pedals'
 };
 

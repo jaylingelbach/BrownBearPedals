@@ -44,6 +44,12 @@ export default function Header() {
     'hover:text-foreground hover:underline ' +
     'focus-visible:outline-none focus-visible:underline';
 
+  /**
+   * Active state helper:
+   * - Only cares about the pathname part (query params are stripped).
+   * - Use this for top-level routes (/, /about, /merch, /pedals, /contact, etc.)
+   *   and for "All Pedals" (which is just /pedals).
+   */
   const isActive = (href: string) => {
     // Extract the pathname portion from href (strip query params)
     const hrefPath = href.split('?')[0];
@@ -188,8 +194,37 @@ export default function Header() {
         aria-label="Main navigation"
       >
         {/* Left: brand / logo */}
-        <Link href="/" className="text-sm font-semibold tracking-tight">
-          Brown Bear Pedals
+        <Link
+          href="/"
+          className="flex items-center gap-3 group"
+          aria-label="Brown Bear Effects home"
+        >
+          {/* Circular badge / logo */}
+          <span
+            className="
+              flex h-9 w-9 items-center justify-center
+              rounded-full border border-border
+              bg-amber-50/80 text-xs font-semibold
+              shadow-sm
+              transition-transform duration-150 group-hover:scale-105
+            "
+          >
+            <span className="mr-0.5">🐻</span>
+            <span className="tracking-tight">BB</span>
+          </span>
+
+          {/* Wordmark */}
+          <span className="flex flex-col leading-tight">
+            <span className="text-[0.75rem] font-semibold uppercase tracking-[0.35em]">
+              Brown&nbsp;Bear
+            </span>
+            <span className="mt-0.5 flex items-center gap-2">
+              <span className="h-px w-4 rounded-full bg-amber-400 transition-all duration-150 group-hover:w-6" />
+              <span className="text-[0.6rem] uppercase tracking-[0.3em] text-muted-foreground">
+                Effects
+              </span>
+            </span>
+          </span>
         </Link>
 
         {/* Desktop nav (hidden on small screens) */}
@@ -488,35 +523,24 @@ export default function Header() {
                 >
                   All Pedals
                 </Link>
+                {/* Filtered links: no active state, since they all share /pedals path */}
                 <Link
                   href="/pedals?productLine=Tarot"
-                  className={cn(
-                    'block py-2 text-sm uppercase tracking-tight text-muted-foreground',
-                    isActive('/pedals?productLine=Tarot') &&
-                      'text-foreground font-semibold'
-                  )}
+                  className="block py-2 text-sm uppercase tracking-tight text-muted-foreground"
                   onClick={() => setMobileOpen(false)}
                 >
                   Tarot Series
                 </Link>
                 <Link
                   href="/pedals?productLine=Limited"
-                  className={cn(
-                    'block py-2 text-sm uppercase tracking-tight text-muted-foreground',
-                    isActive('/pedals?productLine=Limited') &&
-                      'text-foreground font-semibold'
-                  )}
+                  className="block py-2 text-sm uppercase tracking-tight text-muted-foreground"
                   onClick={() => setMobileOpen(false)}
                 >
                   Limited Release
                 </Link>
                 <Link
                   href="/pedals?productLine=Custom"
-                  className={cn(
-                    'block py-2 text-sm uppercase tracking-tight text-muted-foreground',
-                    isActive('/pedals?productLine=Custom') &&
-                      'text-foreground font-semibold'
-                  )}
+                  className="block py-2 text-sm uppercase tracking-tight text-muted-foreground"
                   onClick={() => setMobileOpen(false)}
                 >
                   Custom Order
