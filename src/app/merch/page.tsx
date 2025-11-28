@@ -1,0 +1,7 @@
+export default function Page() {
+  return (
+    <div className="flex justify-center text-2xl">
+      <h1>Merch</h1>
+    </div>
+  );
+}
