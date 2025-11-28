@@ -1,13 +1,14 @@
 /** Fields you’ll want now (and map nicely to CMS later):
- ** slug – "dlitespeed" (what [slug] uses
- ** name – "Dlitespeed"
- ** priceCents – 10000
- ** status – 'available' | 'sold' | 'coming_soon'
- ** imageUrl – main card image
- ** heroImageUrl (optional, for the big detail header)
- ** descriptionShort – for the card
- ** descriptionLong – for the detail page body
- ** tags – ['Overdrive', 'One-off']
+ * slug – "dlitespeed" (what [slug] uses
+ * name – "Dlitespeed"
+ * priceCents – 10000
+ * status – 'available' | 'sold' | 'coming_soon'
+ * imageUrl – main card image
+ * heroImageUrl (optional, for the big detail header) * Optional *
+ * descriptionShort – for the card * Optional *
+ * descriptionLong – for the detail page body * Optional *
+ * tags – ['Overdrive', 'One-off'] * Optional *
+ * productLine - 'Tarot', 'Handwired', 'Limited', 'Custom' etc * Optional *
  ** maybe createdAt / order for sorting
  **/
 
@@ -46,7 +47,8 @@ export const pedals: Pedal[] = [
     descriptionLong: `Use it in front of an overdrive or distortion pedal to open up another range of sonic possibilities.&nbsp;
     The Son of a B pedal is known for it's warm, dynamic, and versatile sound. They typically offer a rich overdrive with a touch of natural compression, which makes them great for adding character and sustain to your tone. The EQ controls are designed to be musical and responsive, allowing you to shape your sound with precision. The overall vibe is usually vintage-inspired, offering a blend of clarity and warmth that works well for a range of styles from blues and rock to jazz.`,
     tags: ['Overdrive', 'Tarot'],
-    type: 'Fuzz'
+    type: 'Fuzz',
+    productLine: 'Tarot'
   },
   {
     slug: 'super-dolt',
@@ -58,6 +60,7 @@ export const pedals: Pedal[] = [
     descriptionShort: 'Based on JHS SuperBolt',
     descriptionLong: `&nbsp;The Brown Bear Effects Super Dolt is a guitar pedal designed to emulate the sound of a classic British-style amplifier, specifically a vintage 60s amp known for its iconic overdrive and crunch`,
     tags: ['Overdrive', 'Tarot'],
-    type: 'Overdrive'
+    type: 'Overdrive',
+    productLine: 'Tarot'
   }
 ];

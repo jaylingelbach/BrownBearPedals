@@ -110,10 +110,23 @@ body {
 }
 
 @layer base {
+  /* Give everything the border color, but NOT outline */
   * {
-    @apply border-border outline-ring/50;
+    @apply border-border;
   }
+
   body {
     @apply bg-background text-foreground;
+  }
+
+  /* Nice focus ring only for keyboard users */
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+  }
+
+  /* When focus came from mouse, don't show outline */
+  :focus:not(:focus-visible) {
+    outline: none;
   }
 }

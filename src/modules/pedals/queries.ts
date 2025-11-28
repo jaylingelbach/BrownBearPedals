@@ -1,5 +1,11 @@
 import { pedals } from './data.local';
-import type { Pedal, ProductStatus, PedalType, PedalFilterId } from './types';
+import type {
+  Pedal,
+  ProductStatus,
+  PedalType,
+  PedalFilterId,
+  ProductLine
+} from './types';
 
 /**
  * Return all pedals, unsorted.
@@ -56,9 +62,18 @@ export function getAvailablePedalsByType(type: PedalType): Pedal[] {
   return getAvailablePedals().filter((pedal) => pedal.type === type);
 }
 
+// TODO: Doc strings
 export function getPedalsForFilter(filter: PedalFilterId): Pedal[] {
   if (filter === 'all') {
     return getAvailablePedals();
   }
   return getAvailablePedals().filter((pedal) => pedal.type === filter);
+}
+
+/**
+ * Find all pedals in a line
+ * (e.g. "Tarot", "Limited", "Custom" etc.)
+ */
+export function getPedalsByProductLine(productLine: ProductLine): Pedal[] {
+  return pedals.filter((pedal) => pedal.productLine === productLine);
 }

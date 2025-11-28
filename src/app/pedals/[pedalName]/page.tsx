@@ -10,7 +10,7 @@ export default async function Page({
 
   return (
     <div>
-      <h1>product page</h1>
+      <h1>product page {pedalName}</h1>
     </div>
   );
 }
