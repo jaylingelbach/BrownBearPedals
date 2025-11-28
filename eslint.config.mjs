@@ -12,8 +12,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
-    // ignore shadcn lint violations
-    "src/components/ui/**",
+    "src/components/ui/*.ts",
+    "src/components/ui/*.tsx",
   ]),
 ]);
 
