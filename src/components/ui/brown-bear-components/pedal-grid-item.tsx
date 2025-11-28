@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
 import { formatPrice } from '@/lib/money/utils';
-import type { ProductStatus } from '@/modules/pedals/types';
+import type { ProductLine, ProductStatus } from '@/modules/pedals/types';
 
 interface PedalGridItemProps {
   slug: string;
@@ -13,7 +13,7 @@ interface PedalGridItemProps {
   imageUrl: string;
   status: ProductStatus;
   className?: string;
-  productLine?: string;
+  productLine?: ProductLine;
 }
 
 /**
