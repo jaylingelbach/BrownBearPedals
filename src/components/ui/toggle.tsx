@@ -26,6 +26,14 @@ const toggleVariants = cva(
   }
 )
 
+/**
+ * Render a stylable TogglePrimitive.Root with classes composed from the `variant` and `size` variants.
+ *
+ * @param className - Additional class names to append to the computed variant classes
+ * @param variant - Visual variant to apply (controls background/border styles)
+ * @param size - Size variant to apply (controls height, padding, and min-width)
+ * @returns A TogglePrimitive.Root element with the computed classes and all other props forwarded
+ */
 function Toggle({
   className,
   variant,

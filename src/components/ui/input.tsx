@@ -2,6 +2,13 @@ import * as React from "react"
 
 import { cn } from "@/lib/utils"
 
+/**
+ * A styled wrapper around the native HTML input element.
+ *
+ * Renders an <input> with a standardized set of utility classes, sets `data-slot="input"`, applies any `className` overrides, and forwards all other native input props.
+ *
+ * @returns The rendered input element with applied styling and forwarded props.
+ */
 function Input({ className, type, ...props }: React.ComponentProps<"input">) {
   return (
     <input

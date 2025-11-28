@@ -21,6 +21,12 @@ const buttonGroupVariants = cva(
   }
 )
 
+/**
+ * Renders a container that visually and semantically groups related buttons and applies orientation-specific styling.
+ *
+ * @param orientation - Layout orientation of the group; `"horizontal"` or `"vertical"`. Defaults to `"horizontal"`.
+ * @returns The rendered div element that acts as the button group container.
+ */
 function ButtonGroup({
   className,
   orientation,
@@ -37,6 +43,12 @@ function ButtonGroup({
   )
 }
 
+/**
+ * Renders a styled text/label container intended for placement inside a ButtonGroup.
+ *
+ * @param asChild - If `true`, renders using a `Slot` so the caller can supply the outer element; otherwise renders a `div`.
+ * @returns A React element representing the styled text container for a button group.
+ */
 function ButtonGroupText({
   className,
   asChild = false,
@@ -57,6 +69,12 @@ function ButtonGroupText({
   )
 }
 
+/**
+ * Renders a visual divider used inside a ButtonGroup, honoring the specified orientation.
+ *
+ * @param className - Additional classes to apply to the separator element
+ * @param orientation - Orientation of the separator; `"vertical"` or `"horizontal"`. Defaults to `"vertical"`.
+ */
 function ButtonGroupSeparator({
   className,
   orientation = "vertical",

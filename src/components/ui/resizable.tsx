@@ -4,6 +4,12 @@ import * as ResizablePrimitive from "react-resizable-panels"
 
 import { cn } from "@/lib/utils"
 
+/**
+ * Wraps a ResizablePrimitive.PanelGroup as a full-size, flex-based resizable container.
+ *
+ * @param className - Additional CSS class names to merge with the component's default layout classes.
+ * @returns A PanelGroup element configured as a resizable container with `data-slot="resizable-panel-group"`.
+ */
 function ResizablePanelGroup({
   className,
   ...props
@@ -20,12 +26,26 @@ function ResizablePanelGroup({
   )
 }
 
+/**
+ * Wraps the resizable panel primitive and sets a `data-slot="resizable-panel"` attribute.
+ *
+ * @returns A JSX element representing the wrapped resizable panel
+ */
 function ResizablePanel({
   ...props
 }: React.ComponentProps<typeof ResizablePrimitive.Panel>) {
   return <ResizablePrimitive.Panel data-slot="resizable-panel" {...props} />
 }
 
+/**
+ * Renders a panel resize handle used by resizable panels.
+ *
+ * When `withHandle` is true, a visual grip icon is rendered inside the handle; otherwise the handle is rendered without inner content.
+ *
+ * @param withHandle - If true, render a visible grip control inside the handle.
+ * @param className - Additional CSS classes to apply to the handle container.
+ * @returns The resize handle element for a resizable panel.
+ */
 function ResizableHandle({
   withHandle,
   className,

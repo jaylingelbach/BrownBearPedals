@@ -5,30 +5,57 @@ import { Drawer as DrawerPrimitive } from "vaul"
 
 import { cn } from "@/lib/utils"
 
+/**
+ * Render the Drawer root element with a standardized `data-slot` for styling and automation hooks.
+ *
+ * @returns A `DrawerPrimitive.Root` React element with `data-slot="drawer"` and all provided props forwarded.
+ */
 function Drawer({
   ...props
 }: React.ComponentProps<typeof DrawerPrimitive.Root>) {
   return <DrawerPrimitive.Root data-slot="drawer" {...props} />
 }
 
+/**
+ * Renders a drawer trigger element with a standardized `data-slot` and forwards all props to the underlying primitive.
+ *
+ * @param props - Props passed to the underlying `DrawerPrimitive.Trigger`
+ * @returns The rendered drawer trigger element
+ */
 function DrawerTrigger({
   ...props
 }: React.ComponentProps<typeof DrawerPrimitive.Trigger>) {
   return <DrawerPrimitive.Trigger data-slot="drawer-trigger" {...props} />
 }
 
+/**
+ * Renders vaul's DrawerPrimitive.Portal with a data-slot of "drawer-portal" and forwards all received props.
+ *
+ * @returns A Portal element with `data-slot="drawer-portal"` and the provided props applied.
+ */
 function DrawerPortal({
   ...props
 }: React.ComponentProps<typeof DrawerPrimitive.Portal>) {
   return <DrawerPrimitive.Portal data-slot="drawer-portal" {...props} />
 }
 
+/**
+ * Render a close control for the drawer and forward received props to the close element.
+ *
+ * @param props - Props forwarded to the drawer close primitive element
+ * @returns A React element representing the drawer's close control
+ */
 function DrawerClose({
   ...props
 }: React.ComponentProps<typeof DrawerPrimitive.Close>) {
   return <DrawerPrimitive.Close data-slot="drawer-close" {...props} />
 }
 
+/**
+ * Renders the drawer backdrop overlay with built-in backdrop, z-index, and open/close animations.
+ *
+ * @returns The overlay element used as the drawer backdrop.
+ */
 function DrawerOverlay({
   className,
   ...props
@@ -45,6 +72,13 @@ function DrawerOverlay({
   )
 }
 
+/**
+ * Renders the drawer's content area inside a portal and includes the overlay and direction-aware layout classes.
+ *
+ * @param className - Additional CSS classes to apply to the content container
+ * @param children - Elements to render inside the drawer content
+ * @returns The rendered drawer content element, mounted in a portal with its overlay and directional layout applied
+ */
 function DrawerContent({
   className,
   children,
@@ -72,6 +106,13 @@ function DrawerContent({
   )
 }
 
+/**
+ * Header container for drawer content that adjusts spacing and text alignment based on drawer direction.
+ *
+ * @param className - Additional CSS classes to merge with the component's default classes.
+ * @param props - Other standard div props are forwarded to the root element.
+ * @returns The rendered div element with `data-slot="drawer-header"` and composed className.
+ */
 function DrawerHeader({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
@@ -85,6 +126,11 @@ function DrawerHeader({ className, ...props }: React.ComponentProps<"div">) {
   )
 }
 
+/**
+ * Renders a footer container for drawer content that sticks to the bottom and provides spacing.
+ *
+ * @returns The footer `div` element with `data-slot="drawer-footer"` and a composed `className`
+ */
 function DrawerFooter({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
@@ -95,6 +141,12 @@ function DrawerFooter({ className, ...props }: React.ComponentProps<"div">) {
   )
 }
 
+/**
+ * Renders a drawer title element with base typography and an explicit `data-slot`.
+ *
+ * @param className - Additional CSS classes to append to the component's base typography.
+ * @returns A React element for the drawer title.
+ */
 function DrawerTitle({
   className,
   ...props
@@ -108,6 +160,11 @@ function DrawerTitle({
   )
 }
 
+/**
+ * Renders a drawer description element with muted, small text styling.
+ *
+ * @returns The DrawerPrimitive.Description element with a composed `className` that applies muted foreground and `text-sm`.
+ */
 function DrawerDescription({
   className,
   ...props

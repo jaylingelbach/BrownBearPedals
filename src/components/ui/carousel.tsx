@@ -30,6 +30,13 @@ type CarouselContextProps = {
 
 const CarouselContext = React.createContext<CarouselContextProps | null>(null)
 
+/**
+ * Accesses the Carousel context to obtain carousel refs, API, and navigation helpers.
+ *
+ * @returns The CarouselContextProps object containing `carouselRef`, `api`, `orientation`, `opts`, `setApi`, `scrollPrev`, `scrollNext`, `canScrollPrev`, and `canScrollNext`.
+ *
+ * @throws Error if called outside of a `<Carousel />` provider.
+ */
 function useCarousel() {
   const context = React.useContext(CarouselContext)
 
@@ -40,6 +47,17 @@ function useCarousel() {
   return context
 }
 
+/**
+ * Sets up an Embla-based carousel and supplies carousel state and navigation handlers to child components via context.
+ *
+ * @param orientation - Layout direction of the carousel; either `"horizontal"` or `"vertical"`. Defaults to `"horizontal"`.
+ * @param opts - Embla initialization options passed through to the carousel instance.
+ * @param setApi - Optional callback that receives the Embla API once it is available.
+ * @param plugins - Optional array of Embla plugins to attach to the carousel.
+ * @param className - Additional CSS class names applied to the carousel container.
+ * @param children - Child nodes rendered inside the carousel container (slides and UI).
+ * @returns A React element that provides carousel context and renders the carousel container with its children.
+ */
 function Carousel({
   orientation = "horizontal",
   opts,
@@ -130,6 +148,16 @@ function Carousel({
   )
 }
 
+/**
+ * Renders the carousel viewport and the inner slide container bound to the carousel instance.
+ *
+ * The outer element is the Embla viewport (bound to the carousel ref) and the inner element is a flex container
+ * that lays out slides horizontally or vertically based on the current orientation.
+ *
+ * @param className - Additional CSS classes applied to the inner slide container
+ * @param props - Other HTML div props forwarded to the inner slide container
+ * @returns The JSX structure for the carousel viewport and inner slide container
+ */
 function CarouselContent({ className, ...props }: React.ComponentProps<"div">) {
   const { carouselRef, orientation } = useCarousel()
 
@@ -151,6 +179,13 @@ function CarouselContent({ className, ...props }: React.ComponentProps<"div">) {
   )
 }
 
+/**
+ * Renders a slide wrapper for the Carousel that applies orientation-aware spacing and accessibility attributes.
+ *
+ * @param className - Additional CSS classes to merge with the component's base classes
+ * @param props - Other `div` props are forwarded to the rendered element
+ * @returns A `div` element with role="group", `aria-roledescription="slide"`, data-slot="carousel-item", and padding that depends on the carousel orientation
+ */
 function CarouselItem({ className, ...props }: React.ComponentProps<"div">) {
   const { orientation } = useCarousel()
 
@@ -169,6 +204,15 @@ function CarouselItem({ className, ...props }: React.ComponentProps<"div">) {
   )
 }
 
+/**
+ * Renders the "previous" navigation button for a Carousel.
+ *
+ * The button is positioned and rotated according to the carousel's orientation,
+ * is disabled when there is no previous slide, and invokes the carousel's
+ * `scrollPrev` action when clicked.
+ *
+ * @returns The previous-slide navigation button element.
+ */
 function CarouselPrevious({
   className,
   variant = "outline",
@@ -199,6 +243,16 @@ function CarouselPrevious({
   )
 }
 
+/**
+ * Renders the carousel's "next" navigation button that advances to the next slide.
+ *
+ * The button is positioned differently for horizontal and vertical carousels, is disabled when there
+ * is no next slide, and forwards any additional Button props.
+ *
+ * @param variant - Button variant to apply. Defaults to `"outline"`.
+ * @param size - Button size to apply. Defaults to `"icon"`.
+ * @returns A React element representing the carousel's next navigation button; disabled when at the last slide and positioned according to carousel orientation.
+ */
 function CarouselNext({
   className,
   variant = "outline",

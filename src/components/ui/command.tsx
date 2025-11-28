@@ -11,6 +11,12 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog"
 
+/**
+ * Styled wrapper around cmdk's `Command` primitive that provides the command-palette container layout and theme.
+ *
+ * @param className - Additional CSS classes to merge with the component's base styles
+ * @returns The `CommandPrimitive` element with project-specific container styling and merged props
+ */
 function Command({
   className,
   ...props
@@ -27,6 +33,19 @@ function Command({
   )
 }
 
+/**
+ * Renders a Dialog containing a styled Command palette with an accessible header.
+ *
+ * The dialog includes a screen-reader-only header (title and description), content
+ * that optionally shows a close button, and a Command region that applies slot-targeted
+ * styling for input, groups, items, and separators.
+ *
+ * @param title - Visible title for assistive technology (defaults to "Command Palette")
+ * @param description - Visible description for assistive technology (defaults to "Search for a command to run...")
+ * @param className - Additional classes applied to the DialogContent container
+ * @param showCloseButton - When `true`, renders the DialogContent close button (defaults to `true`)
+ * @returns A Dialog element that wraps the command palette and its children
+ */
 function CommandDialog({
   title = "Command Palette",
   description = "Search for a command to run...",
@@ -58,6 +77,11 @@ function CommandDialog({
   )
 }
 
+/**
+ * Renders the command-palette search input: a left-aligned search icon and a styled input slot.
+ *
+ * @returns A JSX element containing the search icon and a slotted input (`data-slot="command-input"`) for use inside the command palette.
+ */
 function CommandInput({
   className,
   ...props
@@ -80,6 +104,13 @@ function CommandInput({
   )
 }
 
+/**
+ * A styled wrapper for CommandPrimitive.List that provides a scrollable, max-height constrained container for command items.
+ *
+ * Renders a CommandPrimitive.List element with a `data-slot="command-list"` attribute and default classes that limit height and enable vertical scrolling; accepts and merges an optional `className` and all other native props.
+ *
+ * @returns The rendered CommandPrimitive.List element configured as a scrollable command list container.
+ */
 function CommandList({
   className,
   ...props
@@ -96,6 +127,11 @@ function CommandList({
   )
 }
 
+/**
+ * Renders the empty-state placeholder for the command palette list.
+ *
+ * @returns A `CommandPrimitive.Empty` element with `data-slot="command-empty"` and base padding and text styling used when no command items are available.
+ */
 function CommandEmpty({
   ...props
 }: React.ComponentProps<typeof CommandPrimitive.Empty>) {
@@ -108,6 +144,13 @@ function CommandEmpty({
   )
 }
 
+/**
+ * Renders a styled wrapper for cmdk's Group primitive to group command items.
+ *
+ * @param className - Additional CSS classes appended to the component's default styling
+ * @param props - All other props are forwarded to the underlying cmdk Group primitive
+ * @returns The rendered cmdk Group element with applied styling and forwarded props
+ */
 function CommandGroup({
   className,
   ...props
@@ -124,6 +167,12 @@ function CommandGroup({
   )
 }
 
+/**
+ * Renders a styled separator used inside the command palette.
+ *
+ * @param className - Additional class names to apply to the separator
+ * @returns The rendered CommandPrimitive.Separator element
+ */
 function CommandSeparator({
   className,
   ...props
@@ -137,6 +186,11 @@ function CommandSeparator({
   )
 }
 
+/**
+ * Renders a command palette item with consistent styling for selected, disabled, and icon-containing items.
+ *
+ * @returns A CommandPrimitive.Item element styled for use within the command palette.
+ */
 function CommandItem({
   className,
   ...props
@@ -153,6 +207,11 @@ function CommandItem({
   )
 }
 
+/**
+ * Displays a right-aligned, compact keyboard shortcut label for a command item.
+ *
+ * @returns A span element with the `data-slot="command-shortcut"` attribute and styling for muted, small, widely spaced shortcut text.
+ */
 function CommandShortcut({
   className,
   ...props

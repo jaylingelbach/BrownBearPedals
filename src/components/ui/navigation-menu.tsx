@@ -5,6 +5,16 @@ import { ChevronDownIcon } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 
+/**
+ * Render the navigation menu root and an optional viewport for menu content.
+ *
+ * Renders a Radix NavigationMenu Root with composed classes and provided children; when `viewport` is true, includes a positioned viewport element for content rendering.
+ *
+ * @param className - Additional CSS class names to append to the root container.
+ * @param children - Menu items and triggers to render inside the navigation menu.
+ * @param viewport - Whether to render the dedicated NavigationMenuViewport; defaults to `true`.
+ * @returns The composed NavigationMenu root element with children and optional viewport.
+ */
 function NavigationMenu({
   className,
   children,
@@ -29,6 +39,14 @@ function NavigationMenu({
   )
 }
 
+/**
+ * Wraps the Radix NavigationMenu List with default layout, alignment, and spacing classes.
+ *
+ * The rendered element includes a `data-slot="navigation-menu-list"` attribute and composes
+ * the provided `className` with the component's base classes.
+ *
+ * @returns A React element for the navigation menu list with the composed class names
+ */
 function NavigationMenuList({
   className,
   ...props
@@ -45,6 +63,12 @@ function NavigationMenuList({
   )
 }
 
+/**
+ * Renders a navigation menu item wrapper that applies a base "relative" layout class, sets a `data-slot` attribute, and forwards all props to the underlying Radix NavigationMenu Item.
+ *
+ * @param className - Additional CSS class names to merge with the base "relative" class.
+ * @returns The rendered NavigationMenu Item element.
+ */
 function NavigationMenuItem({
   className,
   ...props
@@ -62,6 +86,11 @@ const navigationMenuTriggerStyle = cva(
   "group inline-flex h-9 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground disabled:pointer-events-none disabled:opacity-50 data-[state=open]:hover:bg-accent data-[state=open]:text-accent-foreground data-[state=open]:focus:bg-accent data-[state=open]:bg-accent/50 focus-visible:ring-ring/50 outline-none transition-[color,box-shadow] focus-visible:ring-[3px] focus-visible:outline-1"
 )
 
+/**
+ * Renders a styled navigation menu trigger that displays its children and a chevron icon which rotates when the menu is open.
+ *
+ * @returns A navigation menu trigger element with composed styles and an animated chevron indicator.
+ */
 function NavigationMenuTrigger({
   className,
   children,
@@ -82,6 +111,13 @@ function NavigationMenuTrigger({
   )
 }
 
+/**
+ * Renders the content panel for a navigation menu trigger.
+ *
+ * @param className - Additional class names to apply to the content container.
+ * @param props - Remaining props forwarded to the underlying Radix `Content` primitive.
+ * @returns The rendered NavigationMenu content element.
+ */
 function NavigationMenuContent({
   className,
   ...props
@@ -99,6 +135,12 @@ function NavigationMenuContent({
   )
 }
 
+/**
+ * Renders a positioned navigation menu viewport used to display content panels.
+ *
+ * @param className - Additional class names appended to the viewport element.
+ * @returns The positioned viewport element for navigation menu content.
+ */
 function NavigationMenuViewport({
   className,
   ...props
@@ -121,6 +163,13 @@ function NavigationMenuViewport({
   )
 }
 
+/**
+ * Renders a styled wrapper around Radix's NavigationMenu Link, applying project utility classes and forwarding remaining props.
+ *
+ * @param className - Additional class names to merge with the component's default styles
+ * @param props - All other props are forwarded to the underlying Radix NavigationMenu Link
+ * @returns The rendered navigation menu link element
+ */
 function NavigationMenuLink({
   className,
   ...props
@@ -137,6 +186,14 @@ function NavigationMenuLink({
   )
 }
 
+/**
+ * Renders the navigation menu indicator caret positioned beneath the active menu item.
+ *
+ * The element animates in/out with the menu state and visually presents a rotated square
+ * (caret) aligned to the bottom of the trigger/content area.
+ *
+ * @returns A React element representing the indicator caret positioned under the active menu item.
+ */
 function NavigationMenuIndicator({
   className,
   ...props

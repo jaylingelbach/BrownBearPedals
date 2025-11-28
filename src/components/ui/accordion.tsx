@@ -4,12 +4,23 @@ import { ChevronDownIcon } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 
+/**
+ * Renders a Radix Accordion Root with a data-slot of "accordion" and forwards all received props.
+ *
+ * @returns The Accordion root element configured with the provided props.
+ */
 function Accordion({
   ...props
 }: React.ComponentProps<typeof AccordionPrimitive.Root>) {
   return <AccordionPrimitive.Root data-slot="accordion" {...props} />
 }
 
+/**
+ * Renders an accordion item element with a default bottom border and optional custom classes.
+ *
+ * @param className - Additional CSS class names to merge with the default "border-b last:border-b-0" style.
+ * @returns The rendered AccordionPrimitive.Item element with merged classes and all remaining props forwarded.
+ */
 function AccordionItem({
   className,
   ...props
@@ -23,6 +34,13 @@ function AccordionItem({
   )
 }
 
+/**
+ * Render an accordion item trigger with preset styling, accessible header wrapper, and a chevron icon that rotates when open.
+ *
+ * Forwards additional props to the underlying Radix Trigger element and merges any provided `className` with the component's defaults.
+ *
+ * @returns A JSX element that acts as the interactive trigger for an accordion item, containing the provided children and a chevron icon that rotates when the item is expanded.
+ */
 function AccordionTrigger({
   className,
   children,
@@ -45,6 +63,13 @@ function AccordionTrigger({
   )
 }
 
+/**
+ * Renders the content panel for an accordion item.
+ *
+ * @param className - Additional CSS classes applied to the inner content wrapper.
+ * @param children - Elements rendered inside the accordion content panel.
+ * @returns The rendered accordion content element with its children wrapped in a padded container.
+ */
 function AccordionContent({
   className,
   children,

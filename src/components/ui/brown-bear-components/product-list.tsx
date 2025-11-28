@@ -11,7 +11,12 @@ interface ProductCardProps {
   tags?: string[];
 }
 
-// TODO: Doc strings
+/**
+ * Render a PedalGridItem for a product using the provided product props.
+ *
+ * @param status - Product availability status; when `undefined`, defaults to `'available'`.
+ * @returns A JSX element rendering a configured `PedalGridItem`.
+ */
 export default function ProductList({
   slug,
   name,

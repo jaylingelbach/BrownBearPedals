@@ -18,6 +18,12 @@ export const metadata: Metadata = {
   description: 'Handcrafted guitar effects pedals'
 };
 
+/**
+ * Renders the application's root HTML layout including language, font variables, header, and page content.
+ *
+ * @param children - The page content to render inside the layout's body.
+ * @returns The top-level HTML element (html > body) containing the Header and the provided `children`.
+ */
 export default function RootLayout({
   children
 }: Readonly<{

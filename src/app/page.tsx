@@ -6,7 +6,11 @@ import { PedalFilterId } from '@/modules/pedals/types';
 import PedalFiltersBar from '@/modules/pedals/ui/pedals-filter-bar';
 import { useMemo, useState } from 'react';
 
-// TODO: Doc strings
+/**
+ * Renders the pedals home page with a filter bar and a responsive grid of pedal items.
+ *
+ * @returns The page React element containing the filter controls and the pedal results grid.
+ */
 export default function Home() {
   const [selectedFilter, setSelectedFilter] = useState<PedalFilterId>('all');
 

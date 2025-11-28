@@ -5,6 +5,13 @@ import * as SwitchPrimitive from "@radix-ui/react-switch"
 
 import { cn } from "@/lib/utils"
 
+/**
+ * Accessible toggle switch component styled with Tailwind-like classes and built on Radix UI's Switch primitive.
+ *
+ * @param className - Additional CSS class names to append to the component's default styling.
+ * @param props - Remaining props are forwarded to the underlying Radix `SwitchPrimitive.Root`.
+ * @returns The rendered Switch element.
+ */
 function Switch({
   className,
   ...props
