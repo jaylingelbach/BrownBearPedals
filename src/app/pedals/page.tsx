@@ -89,7 +89,7 @@ function PedalsPageInner() {
         <h1 className="text-sm font-semibold uppercase tracking-[0.18em]">
           {heading}
         </h1>
-        {notice && <p className="mt-2 text-xs text-destructive">{notice}</p>}
+        {notice && <p className="mt-2 text-xs text-amber-600">{notice}</p>}
       </header>
 
       {/* Filters (only if there is something to filter) */}
