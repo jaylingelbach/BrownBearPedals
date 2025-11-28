@@ -102,14 +102,20 @@ function PedalsPageInner() {
       )}
 
       {/* Empty-line message / gentle alert */}
-      {emptyMessage && (
+      {(emptyMessage ||
+        (basePedals.length > 0 && visiblePedals.length === 0)) && (
         <section className="mb-6 rounded-lg border border-dashed border-muted-foreground/40 bg-muted/30 px-4 py-3 text-xs text-muted-foreground">
-          <p>{emptyMessage}</p>
+          <p>
+            {emptyMessage ||
+              `No ${
+                selectedFilter === 'All' ? '' : selectedFilter + ' '
+              }pedals found in this line.`}
+          </p>
           <Link
             href="/pedals"
             className="mt-1 inline-block font-medium underline"
           >
-            Browse all pedals
+            {emptyMessage ? 'Browse all pedals' : 'Clear filters'}
           </Link>
         </section>
       )}
