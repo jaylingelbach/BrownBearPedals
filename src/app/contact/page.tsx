@@ -1,6 +1,6 @@
 'use client';
 
-import { FormEvent } from 'react';
+import { FormEvent, useState } from 'react';
 import Link from 'next/link';
 
 import {
@@ -17,36 +17,69 @@ import { Button } from '@/components/ui/button';
 
 const SUPPORT_EMAIL = 'jay@brownbearpedals.com';
 
-function handleContactSubmit(event: FormEvent<HTMLFormElement>) {
-  event.preventDefault();
-
-  const form = event.currentTarget;
-  const formData = new FormData(form);
-
-  const name = (formData.get('name') ?? '').toString();
-  const email = (formData.get('email') ?? '').toString();
-  const topic = (formData.get('topic') ?? '').toString();
-  const message = (formData.get('message') ?? '').toString();
-
-  const subjectBase = topic || 'Brown Bear Pedals inquiry';
-  const subject = encodeURIComponent(
-    name ? `${subjectBase} – ${name}` : subjectBase
-  );
-
-  const bodyLines = [
-    name && `Name: ${name}`,
-    email && `Email: ${email}`,
-    '',
-    message
-  ].filter(Boolean);
-
-  const body = encodeURIComponent(bodyLines.join('\n'));
-
-  // Opens the user’s email client with a pre-filled message
-  window.location.href = `mailto:${SUPPORT_EMAIL}?subject=${subject}&body=${body}`;
-}
+type ContactErrors = {
+  name?: string;
+  email?: string;
+  message?: string;
+};
 
 export default function ContactPage() {
+  const [errors, setErrors] = useState<ContactErrors>({});
+
+  function handleContactSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
+    const form = event.currentTarget;
+    const formData = new FormData(form);
+
+    const name = (formData.get('name') ?? '').toString().trim();
+    const email = (formData.get('email') ?? '').toString().trim();
+    const topic = (formData.get('topic') ?? '').toString().trim();
+    const message = (formData.get('message') ?? '').toString().trim();
+
+    const nextErrors: ContactErrors = {};
+
+    if (!name) {
+      nextErrors.name = 'Please enter your name.';
+    }
+
+    if (!email) {
+      nextErrors.email = 'Please enter your email address.';
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      nextErrors.email = 'Please enter a valid email address.';
+    }
+
+    if (!message) {
+      nextErrors.message = 'Please enter a message.';
+    }
+
+    // If we have any validation errors, show them and bail out
+    if (Object.keys(nextErrors).length > 0) {
+      setErrors(nextErrors);
+      return;
+    }
+
+    // Clear previous errors on successful validation
+    setErrors({});
+
+    const subjectBase = topic || 'Brown Bear Pedals inquiry';
+    const subject = encodeURIComponent(
+      name ? `${subjectBase} – ${name}` : subjectBase
+    );
+
+    const bodyLines = [
+      name && `Name: ${name}`,
+      email && `Email: ${email}`,
+      '',
+      message
+    ].filter(Boolean);
+
+    const body = encodeURIComponent(bodyLines.join('\n'));
+
+    // Opens the user’s email client with a pre-filled message
+    window.location.href = `mailto:${SUPPORT_EMAIL}?subject=${subject}&body=${body}`;
+  }
+
   return (
     <main className="mx-auto max-w-5xl px-4 py-12">
       {/* Heading */}
@@ -65,7 +98,7 @@ export default function ContactPage() {
       </header>
 
       {/* Top info cards */}
-      <section className="grid gap-4 md:grid-cols-3 mb-10">
+      <section className="mb-10 grid gap-4 md:grid-cols-3">
         {/* General questions */}
         <Card className="h-full">
           <CardHeader className="pb-3">
@@ -83,7 +116,7 @@ export default function ContactPage() {
             <Button
               asChild
               variant="link"
-              className="mt-1 h-auto p-0 text-xs font-medium break-all"
+              className="mt-1 h-auto break-all p-0 text-xs font-medium"
             >
               <Link href={`mailto:${SUPPORT_EMAIL}`}>{SUPPORT_EMAIL}</Link>
             </Button>
@@ -109,7 +142,7 @@ export default function ContactPage() {
               asChild
               variant="outline"
               size="sm"
-              className="text-[0.7rem] uppercase tracking-[0.18em] hover:bg-pink-500 hover:text-primary hover:scale-105"
+              className="text-[0.7rem] uppercase tracking-[0.18em] hover:scale-105 hover:bg-pink-500 hover:text-primary"
             >
               <Link href="/support">Visit Support Page</Link>
             </Button>
@@ -135,7 +168,7 @@ export default function ContactPage() {
               asChild
               variant="outline"
               size="sm"
-              className="text-[0.7rem] uppercase tracking-[0.18em] hover:bg-pink-500 hover:text-primary hover:scale-105"
+              className="text-[0.7rem] uppercase tracking-[0.18em] hover:scale-105 hover:bg-pink-500 hover:text-primary"
             >
               <Link href="/pedals?productLine=Custom">Custom Order Info</Link>
             </Button>
@@ -171,7 +204,17 @@ export default function ContactPage() {
                   type="text"
                   autoComplete="name"
                   className="text-sm"
+                  aria-invalid={Boolean(errors.name)}
+                  aria-describedby={errors.name ? 'name-error' : undefined}
                 />
+                {errors.name && (
+                  <p
+                    id="name-error"
+                    className="text-[0.7rem] text-destructive mt-1"
+                  >
+                    {errors.name}
+                  </p>
+                )}
               </div>
               <div className="space-y-1.5">
                 <Label
@@ -186,7 +229,17 @@ export default function ContactPage() {
                   type="email"
                   autoComplete="email"
                   className="text-sm"
+                  aria-invalid={Boolean(errors.email)}
+                  aria-describedby={errors.email ? 'email-error' : undefined}
                 />
+                {errors.email && (
+                  <p
+                    id="email-error"
+                    className="text-[0.7rem] text-destructive mt-1"
+                  >
+                    {errors.email}
+                  </p>
+                )}
               </div>
             </div>
 
@@ -218,13 +271,23 @@ export default function ContactPage() {
                 name="message"
                 rows={5}
                 className="text-sm"
+                aria-invalid={Boolean(errors.message)}
+                aria-describedby={errors.message ? 'message-error' : undefined}
               />
+              {errors.message && (
+                <p
+                  id="message-error"
+                  className="text-[0.7rem] text-destructive mt-1"
+                >
+                  {errors.message}
+                </p>
+              )}
             </div>
 
             <div className="pt-1">
               <Button
                 type="submit"
-                className="inline-flex h-10 items-center justify-center rounded-full px-8 text-[0.75rem] font-semibold uppercase tracking-[0.18em] hover:bg-pink-500 hover:text-primary hover:scale-105"
+                className="inline-flex h-10 items-center justify-center rounded-full px-8 text-[0.75rem] font-semibold uppercase tracking-[0.18em] hover:scale-105 hover:bg-pink-500 hover:text-primary"
               >
                 Send Message
               </Button>

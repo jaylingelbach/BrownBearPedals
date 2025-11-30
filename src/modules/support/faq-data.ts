@@ -1,5 +1,3 @@
-// src/modules/support/faq-data.ts
-
 export type FaqSectionId =
   | 'general'
   | 'warranty'
@@ -38,7 +36,7 @@ export const faqSections: FaqSection[] = [
         id: 'power-supply',
         question: 'What type of power supply do your pedals require?',
         answer:
-          'Unless otherwise noted on the product page or on the pedal enclosure, our pedals use a standard 9V DC center-negative power supply. We do not recommend using daisy-chained supplies that are noisy or unregulated.  We recommend any high-quality supply that utilizes isolated power.  This would include the Voodoo Lab PP2+ or the IS0-5 and several other brands/models. ONLY purchase and use power supplies made specifically for guitar pedals.'
+          'Unless otherwise noted on the product page or on the pedal enclosure, our pedals use a standard 9V DC center-negative power supply.\n\nWe do not recommend using daisy-chained supplies that are noisy or unregulated. We recommend any high-quality supply that utilizes isolated power. This would include the Voodoo Lab PP2+ or the IS0-5 and several other brands/models.\n\nONLY purchase and use power supplies made specifically for guitar pedals.'
       }
     ]
   },

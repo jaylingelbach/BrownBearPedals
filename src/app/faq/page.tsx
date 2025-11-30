@@ -14,13 +14,13 @@ export default function FaqPage() {
     <main className="mx-auto max-w-4xl px-4 py-12">
       {/* Page heading */}
       <header className="mb-10 space-y-2">
-        <p className="text-xl font-semibold uppercase tracking-[0.25em] text-muted-foreground">
+        <p className="text-[0.7rem] font-semibold uppercase tracking-[0.25em] text-muted-foreground">
           Help & Support
         </p>
-        <h1 className="text-xl font-semibold tracking-tight">
+        <h1 className="text-2xl font-semibold tracking-tight">
           Frequently Asked Questions
         </h1>
-        <p className="max-w-xl text-xl text-muted-foreground">
+        <p className="max-w-xl text-sm text-muted-foreground">
           Answers to common questions about Brown Bear Pedals – from power
           requirements and warranty details to shipping and returns. Click a
           question to expand the answer.
