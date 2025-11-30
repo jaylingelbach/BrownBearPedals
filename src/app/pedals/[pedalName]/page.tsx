@@ -18,7 +18,7 @@ export default async function Page({
   const resolvedParams = await params;
   const { pedalName } = resolvedParams;
 
-  const data = await getPedalBySlug(pedalName);
+  const data = getPedalBySlug(pedalName);
   if (!data) return notFound();
 
   const price = formatPrice(data.priceCents);
@@ -29,7 +29,9 @@ export default async function Page({
 
   const descBullets = data.descriptionBullets ?? [];
 
-  const outro = data?.descriptionOutro;
+  const descOutro = data.descriptionOutro
+    ? data.descriptionOutro.split(/\n{2,}/)
+    : [];
 
   const hasIntro = descIntro.length > 0;
   const hasBullets = descBullets.length > 0;
@@ -102,7 +104,18 @@ export default async function Page({
             </div>
           )}
           {/* Outro */}
-          {outro && <div className="mt-2 space-y-3">{outro}</div>}
+          {descOutro.length > 0 && (
+            <div className="mt-2 space-y-3">
+              {descOutro.map((paragraph, index) => (
+                <p
+                  key={index}
+                  className="text-sm sm:text-base leading-relaxed text-foreground"
+                >
+                  {paragraph}
+                </p>
+              ))}
+            </div>
+          )}
         </div>
       </section>
     </main>
