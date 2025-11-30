@@ -1,5 +1,6 @@
 'use client';
 
+import { z } from 'zod';
 import { useState } from 'react';
 import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
@@ -8,10 +9,14 @@ interface BuyNowButtonProps {
   slug: string; // e.g. "harmonic-albinator"
 }
 
-type CreateCheckoutSessionResponse = {
-  url?: string;
-  error?: string;
-};
+const CheckoutSessionResponseSchema = z.object({
+  url: z.string().url().optional(),
+  error: z.string().optional()
+});
+
+type CreateCheckoutSessionResponse = z.infer<
+  typeof CheckoutSessionResponseSchema
+>;
 
 export function BuyNowButton({ slug }: BuyNowButtonProps) {
   const [isLoading, setIsLoading] = useState(false);
@@ -29,7 +34,9 @@ export function BuyNowButton({ slug }: BuyNowButtonProps) {
       let data: CreateCheckoutSessionResponse | null = null;
 
       try {
-        data = (await response.json()) as CreateCheckoutSessionResponse;
+        const json = await response.json();
+        const result = CheckoutSessionResponseSchema.safeParse(json);
+        data = result.success ? result.data : null;
       } catch {
         data = null;
       }
