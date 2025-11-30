@@ -1,5 +1,10 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
+/**
+ * Render the About page for Brown Bear Pedals, presenting the shop's name origin, history, and location.
+ *
+ * @returns The About page as a React element
+ */
 export default function AboutPage() {
   return (
     <main className="mx-auto max-w-4xl px-4 py-12">
