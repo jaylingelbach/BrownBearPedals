@@ -8,13 +8,11 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
 });
 
 interface SuccessPageProps {
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+  searchParams: { [key: string]: string | string[] | undefined };
 }
 
 export default async function SuccessPage({ searchParams }: SuccessPageProps) {
-  const resolvedSearchParams = await searchParams;
-
-  const raw = resolvedSearchParams.session_id;
+  const raw = searchParams.session_id;
   const sessionId = Array.isArray(raw) ? raw[0] : raw;
 
   if (!sessionId) {
