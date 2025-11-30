@@ -6,7 +6,7 @@ import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
 
 interface BuyNowButtonProps {
-  slug: string; // e.g. "harmonic-albinator"
+  slug: string; // e.g. "tree-fiddy"
 }
 
 const CheckoutSessionResponseSchema = z.object({
