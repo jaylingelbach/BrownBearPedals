@@ -22,6 +22,7 @@ export function BuyNowButton({ slug }: BuyNowButtonProps) {
   const [isLoading, setIsLoading] = useState(false);
 
   const handleClick = async () => {
+    if (isLoading) return;
     try {
       setIsLoading(true);
 
