@@ -35,6 +35,7 @@ export default async function Page({
 
   const hasIntro = descIntro.length > 0;
   const hasBullets = descBullets.length > 0;
+  const hasOutro = descOutro.length > 0;
 
   return (
     <main className="mx-auto max-w-6xl px-4 py-8 sm:py-10">
@@ -104,7 +105,7 @@ export default async function Page({
             </div>
           )}
           {/* Outro */}
-          {descOutro.length > 0 && (
+          {hasOutro && (
             <div className="mt-2 space-y-3">
               {descOutro.map((paragraph, index) => (
                 <p
