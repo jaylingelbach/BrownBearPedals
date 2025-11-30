@@ -1,9 +1,9 @@
 import Link from 'next/link';
 
 /**
- * Renders the Support page showing a centered "Support" heading.
+ * Render the support page with warranty, returns, repairs, and warranty-registration information.
  *
- * @returns The JSX element for the Support page.
+ * @returns The JSX element representing the Support page layout
  */
 
 export default function SupportPage() {

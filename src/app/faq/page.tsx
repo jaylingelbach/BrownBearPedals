@@ -9,6 +9,14 @@ import {
 
 import { faqSections } from '@/modules/support/faq-data';
 
+/**
+ * Render the Frequently Asked Questions page with sectioned accordion lists.
+ *
+ * Renders a page header and a list of FAQ sections sourced from `faqSections`, where each section
+ * displays an optional description and an accordion of questions and answers (single-open, collapsible).
+ *
+ * @returns The JSX element for the FAQ page layout.
+ */
 export default function FaqPage() {
   return (
     <main className="mx-auto max-w-4xl px-4 py-12">

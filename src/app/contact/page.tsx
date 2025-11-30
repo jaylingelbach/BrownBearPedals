@@ -23,6 +23,13 @@ type ContactErrors = {
   message?: string;
 };
 
+/**
+ * Renders the support contact page with informational cards and a contact form.
+ *
+ * The form validates name, email, and message; on successful validation it opens the user's email client with a pre-filled message to the support address and shows field errors inline when validation fails.
+ *
+ * @returns The contact page JSX element.
+ */
 export default function ContactPage() {
   const [errors, setErrors] = useState<ContactErrors>({});
 
