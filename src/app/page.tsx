@@ -1,58 +1,38 @@
-'use client';
-
-import { PedalGridItem } from '@/components/ui/brown-bear-components/pedal-grid-item';
-import {
-  getAvailablePedalTypes,
-  getPedalsForFilter
-} from '@/modules/pedals/queries';
-import { PedalFilterId, PedalType } from '@/modules/pedals/types';
-import PedalFiltersBar from '@/modules/pedals/ui/pedals-filter-bar';
-import { useMemo, useState } from 'react';
+import { getAvailablePedals } from '@/modules/pedals/queries';
+import type { PedalType } from '@/modules/pedals/types';
+import PedalsFilterShell from '@/modules/pedals/ui/pedals-filter-shell';
 
 /**
- * Renders the pedals home page with a filter bar and a responsive grid of pedal items.
- *
- * @returns The page React element containing the filter controls and the pedal results grid.
+ * Home page – server component.
+ * Renders heading + passes initial pedal data into the client filter shell.
  */
-
 export default function Home() {
-  const [selectedFilter, setSelectedFilter] = useState<PedalFilterId>('All');
+  const basePedals = getAvailablePedals();
 
-  const availableTypes = useMemo<PedalType[]>(
-    () => getAvailablePedalTypes(),
-    []
-  );
-
-  const pedals = useMemo(
-    () => getPedalsForFilter(selectedFilter),
-    [selectedFilter]
+  // Derive available types from the current stock
+  const availableTypes: PedalType[] = Array.from(
+    new Set(basePedals.map((pedal) => pedal.type))
   );
 
   return (
     <main className="mx-auto max-w-6xl px-4 py-10">
-      {/* Optional heading / filters go here */}
-      <section className="mb-10" aria-label="Filter pedals">
-        <PedalFiltersBar
-          selectedFilter={selectedFilter}
-          onFilterChange={setSelectedFilter}
-          availableTypes={availableTypes}
-        />
-      </section>
-      <section
-        className="grid gap-12 sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3 mt-5"
-        aria-label="Pedal results"
-      >
-        {pedals.map(({ slug, name, priceCents, imageUrl, status }) => (
-          <PedalGridItem
-            key={slug}
-            slug={slug}
-            name={name}
-            priceCents={priceCents}
-            imageUrl={imageUrl}
-            status={status}
-          />
-        ))}
-      </section>
+      <header className="mb-6">
+        <p className="text-[0.7rem] font-semibold uppercase tracking-[0.25em] text-muted-foreground">
+          Pedals
+        </p>
+        <h1 className="text-2xl font-semibold tracking-tight">
+          Brown Bear Pedals
+        </h1>
+        <p className="mt-2 max-w-2xl text-sm text-muted-foreground">
+          Explore the current lineup of Brown Bear Pedals, from tarot-inspired
+          designs to limited runs.
+        </p>
+      </header>
+
+      <PedalsFilterShell
+        basePedals={basePedals}
+        availableTypes={availableTypes}
+      />
     </main>
   );
 }
