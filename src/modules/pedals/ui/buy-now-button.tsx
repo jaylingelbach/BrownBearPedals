@@ -1,7 +1,7 @@
 'use client';
 
 import { z } from 'zod';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
 
@@ -20,10 +20,12 @@ type CreateCheckoutSessionResponse = z.infer<
 
 export function BuyNowButton({ slug }: BuyNowButtonProps) {
   const [isLoading, setIsLoading] = useState(false);
+  const isSubmittingRef = useRef(false);
 
   const handleClick = async () => {
-    if (isLoading) return;
+    if (isSubmittingRef.current) return;
     try {
+      isSubmittingRef.current = true;
       setIsLoading(true);
 
       const response = await fetch('/api/create-checkout-session', {
@@ -65,6 +67,7 @@ export function BuyNowButton({ slug }: BuyNowButtonProps) {
         'Network error while contacting Stripe. Check your connection and try again.'
       );
     } finally {
+      isSubmittingRef.current = false;
       setIsLoading(false);
     }
   };
@@ -81,7 +84,6 @@ export function BuyNowButton({ slug }: BuyNowButtonProps) {
         disabled={isLoading}
         aria-disabled={isLoading}
         aria-busy={isLoading}
-        aria-label={label}
         className="hover:bg-pink-500 hover:text-primary hover:scale-105"
       >
         {isLoading ? 'Redirecting…' : 'Buy it now'}
