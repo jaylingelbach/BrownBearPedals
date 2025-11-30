@@ -1,6 +1,9 @@
 import Stripe from 'stripe';
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY ?? '', {
+if (!process.env.STRIPE_SECRET_KEY) {
+  throw new Error('Missing required environment variable: STRIPE_SECRET_KEY');
+}
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
   apiVersion: '2025-11-17.clover' // use a real Stripe API version
 });
 
@@ -32,6 +35,7 @@ export default async function SuccessPage({ searchParams }: SuccessPageProps) {
   try {
     session = await stripe.checkout.sessions.retrieve(sessionId);
   } catch (error) {
+    console.error('[checkout/success] Failed to retrieve session:', error);
     return (
       <main className="max-w-xl mx-auto py-16 text-center">
         <h1 className="text-2xl font-bold mb-4">Error retrieving session</h1>
