@@ -18,6 +18,14 @@ type CreateCheckoutSessionResponse = z.infer<
   typeof CheckoutSessionResponseSchema
 >;
 
+/**
+ * Renders a button that initiates a checkout flow for the given product slug and redirects the user to the Stripe Checkout page.
+ *
+ * Shows a loading state while creating the checkout session, disables the button to prevent duplicate submissions, and exposes a screen-reader live region announcing status changes. On failure it displays user-facing error toasts; on success it navigates the browser to the checkout URL returned by the API.
+ *
+ * @param slug - The product identifier used to create the checkout session (for example, "tree-fiddy")
+ * @returns A JSX fragment containing the purchase button and an accessible live region for status announcements
+ */
 export function BuyNowButton({ slug }: BuyNowButtonProps) {
   const [isLoading, setIsLoading] = useState(false);
   const isSubmittingRef = useRef(false);
