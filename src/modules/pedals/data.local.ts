@@ -1,10 +1,10 @@
 /** Fields you’ll want now (and map nicely to CMS later):
- * slug – "dlitespeed" (what [slug] uses)
+ * slug – "tree-fiddy" (what [slug] uses)
  * name – "Dlitespeed"
  * priceCents – 10000
  * status – 'available' | 'sold' | 'coming_soon'
  * imageUrl – main card image
- * heroImageUrl (optional, for the big detail header) * Optional *
+ * heroImageUrl (optiongal, for the big detail header) * Optional *
  * descriptionShort – for the card * Optional *
  * descriptionIntro – first paragraphs for the detail page body * Optional *
  * descriptionBullets – bulleted feature list * Optional *
