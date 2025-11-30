@@ -48,6 +48,9 @@ export interface Pedal {
   heroImageUrl?: string;
   descriptionShort?: string;
   descriptionLong?: string;
+  descriptionIntro?: string;
+  descriptionBullets?: string[];
+  descriptionOutro?: string;
   tags?: string[];
   type: PedalType;
   productLine?: ProductLine;
