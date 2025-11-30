@@ -4,6 +4,10 @@ import { z } from 'zod';
 
 import { getPedalBySlug } from '@/modules/pedals/queries';
 
+if (!process.env.STRIPE_SECRET_KEY) {
+  throw new Error('Missing required environment variable: STRIPE_SECRET_KEY');
+}
+
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY ?? '', {
   apiVersion: '2025-11-17.clover'
 });
@@ -28,7 +32,7 @@ export async function POST(request: NextRequest) {
     const { slug, quantity } = parsed.data;
 
     const pedal = getPedalBySlug(slug);
-    if (!pedal || pedal.stripePriceId === '') {
+    if (!pedal || !pedal.stripePriceId || pedal.status !== 'available') {
       return NextResponse.json({ error: 'Unknown product' }, { status: 400 });
     }
 
@@ -49,8 +53,8 @@ export async function POST(request: NextRequest) {
         }
       ],
       mode: 'payment',
-      success_url: `${origin}/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${origin}/cancel`,
+      success_url: `${origin}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${origin}/checkout/cancel`,
       shipping_address_collection: {
         allowed_countries: ['US', 'CA']
       }

@@ -16,6 +16,13 @@
 
 import { Pedal } from '@/modules/pedals/types';
 
+const STRIPE_PRICE_ID_TREE_FIDDY = process.env.STRIPE_PRICE_ID_TREE_FIDDY;
+if (!STRIPE_PRICE_ID_TREE_FIDDY) {
+  throw new Error(
+    'Missing required environment variable: STRIPE_PRICE_ID_TREE_FIDDY'
+  );
+}
+
 export const pedals: Pedal[] = [
   {
     slug: 'tree-fiddy',
@@ -47,7 +54,7 @@ export const pedals: Pedal[] = [
       'Bring the iconic sound of the Tree Fiddy into your rig and experience it for yourself.',
     tags: ['Overdrive', 'One-off'],
     type: 'Overdrive',
-    stripePriceId: process.env.STRIPE_PRICE_ID_TREE_FIDDY!
+    stripePriceId: STRIPE_PRICE_ID_TREE_FIDDY
   },
   {
     slug: 'son-of-a-b',
