@@ -73,7 +73,7 @@ export const pedals: Pedal[] = [
       'If you are looking for a preamp-style pedal that can live at the heart of your rig, the Son of a B! delivers. ' +
       'From subtle grit to rich driven textures, it rewards touch and dynamics while keeping your playing front and center.',
     tags: ['Overdrive', 'Tarot'],
-    type: 'Overdrive', // labeled Fuzz for testing not for prod
+    type: 'Overdrive',
     productLine: 'Tarot'
   },
   {
