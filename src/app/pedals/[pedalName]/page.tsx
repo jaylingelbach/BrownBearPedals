@@ -1,9 +1,8 @@
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
-
 import { getPedalBySlug } from '@/modules/pedals/queries';
 import { formatPrice } from '@/lib/money/utils';
-import { Button } from '@/components/ui/button';
+import { BuyNowButton } from '@/modules/pedals/ui/buy-now-button';
 
 /**
  * Render a product page component for an individual pedal.
@@ -65,9 +64,7 @@ export default async function Page({
               {price}
             </p>
 
-            <Button className="mt-2 w-full sm:w-auto sm:px-8 hover:bg-pink-500 hover:text-primary">
-              Buy it now
-            </Button>
+            <BuyNowButton slug={pedalName} />
           </div>
 
           {/* Short description */}
