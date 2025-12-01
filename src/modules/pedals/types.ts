@@ -54,4 +54,5 @@ export interface Pedal {
   tags?: string[];
   type: PedalType;
   productLine?: ProductLine;
+  stripePriceId?: string;
 }

@@ -1,14 +1,16 @@
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
-
 import { getPedalBySlug } from '@/modules/pedals/queries';
 import { formatPrice } from '@/lib/money/utils';
-import { Button } from '@/components/ui/button';
+import { BuyNowButton } from '@/modules/pedals/ui/buy-now-button';
 
 /**
- * Render a product page component for an individual pedal.
+ * Render the product page for a single pedal identified by its slug.
  *
- * @param params - A promise that resolves to an object with `pedalName`, which is used as the slug.
+ * Renders image, price, short and long descriptions, feature bullets, and a buy button; triggers a 404 when the pedal is not found.
+ *
+ * @param params - A promise that resolves to an object with `pedalName`, the slug identifying the pedal.
+ * @returns A JSX element representing the pedal product page.
  */
 export default async function Page({
   params
@@ -65,9 +67,7 @@ export default async function Page({
               {price}
             </p>
 
-            <Button className="mt-2 w-full sm:w-auto sm:px-8 hover:bg-pink-500 hover:text-primary">
-              Buy it now
-            </Button>
+            <BuyNowButton slug={pedalName} />
           </div>
 
           {/* Short description */}

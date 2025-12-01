@@ -16,11 +16,18 @@
 
 import { Pedal } from '@/modules/pedals/types';
 
+const STRIPE_PRICE_ID_TREE_FIDDY = process.env.STRIPE_PRICE_ID_TREE_FIDDY;
+if (!STRIPE_PRICE_ID_TREE_FIDDY) {
+  throw new Error(
+    'Missing required environment variable: STRIPE_PRICE_ID_TREE_FIDDY'
+  );
+}
+
 export const pedals: Pedal[] = [
   {
     slug: 'tree-fiddy',
     name: 'Brown Bear Tree Fiddy',
-    priceCents: 10000,
+    priceCents: 17500,
     status: 'available',
     imageUrl: '/tree-fiddy.png',
     heroImageUrl: '/ProductTestImage.png',
@@ -46,7 +53,8 @@ export const pedals: Pedal[] = [
       'With its rugged construction and intuitive layout, the Tree Fiddy is ready for the stage or studio. ' +
       'Bring the iconic sound of the Tree Fiddy into your rig and experience it for yourself.',
     tags: ['Overdrive', 'One-off'],
-    type: 'Overdrive'
+    type: 'Overdrive',
+    stripePriceId: STRIPE_PRICE_ID_TREE_FIDDY
   },
   {
     slug: 'son-of-a-b',
