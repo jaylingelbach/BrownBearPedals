@@ -5,9 +5,12 @@ import { formatPrice } from '@/lib/money/utils';
 import { BuyNowButton } from '@/modules/pedals/ui/buy-now-button';
 
 /**
- * Render a product page component for an individual pedal.
+ * Render the product page for a single pedal identified by its slug.
  *
- * @param params - A promise that resolves to an object with `pedalName`, which is used as the slug.
+ * Renders image, price, short and long descriptions, feature bullets, and a buy button; triggers a 404 when the pedal is not found.
+ *
+ * @param params - A promise that resolves to an object with `pedalName`, the slug identifying the pedal.
+ * @returns A JSX element representing the pedal product page.
  */
 export default async function Page({
   params

@@ -1,4 +1,9 @@
 import Link from 'next/link';
+/**
+ * Renders a static "Order canceled" confirmation page with a link back to the home page.
+ *
+ * @returns The JSX element for the order cancellation page.
+ */
 export default function CancelPage() {
   return (
     <main className="max-w-xl mx-auto py-16 text-center">

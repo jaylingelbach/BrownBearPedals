@@ -12,6 +12,18 @@ interface SuccessPageProps {
   searchParams: { [key: string]: string | string[] | undefined };
 }
 
+/**
+ * Renders the checkout success page for a completed Stripe session.
+ *
+ * Reads `session_id` from `searchParams`, attempts to retrieve the corresponding
+ * Stripe Checkout Session, and renders one of three views:
+ * - a "missing session ID" message when `session_id` is absent,
+ * - an error message when the session cannot be retrieved,
+ * - a thank-you view that optionally displays the customer's email when retrieval succeeds.
+ *
+ * @param searchParams - Query parameters passed to the page; expects `session_id` to identify the Stripe session
+ * @returns The rendered React element for the checkout success page
+ */
 export default async function SuccessPage({ searchParams }: SuccessPageProps) {
   const raw = searchParams.session_id;
   const sessionId = Array.isArray(raw) ? raw[0] : raw;
