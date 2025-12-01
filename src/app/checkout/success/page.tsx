@@ -1,17 +1,10 @@
-import Stripe from 'stripe';
 import Link from 'next/link';
+import { stripe } from '@/lib/stripe';
 
-if (!process.env.STRIPE_SECRET_KEY) {
-  throw new Error('Missing required environment variable: STRIPE_SECRET_KEY');
-}
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
-  apiVersion: '2025-11-17.clover'
-});
-
+// Next 16: searchParams is a Promise
 interface SuccessPageProps {
-  searchParams: { [key: string]: string | string[] | undefined };
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }
-
 /**
  * Renders the checkout success page for a completed Stripe session.
  *
@@ -25,7 +18,9 @@ interface SuccessPageProps {
  * @returns The rendered React element for the checkout success page
  */
 export default async function SuccessPage({ searchParams }: SuccessPageProps) {
-  const raw = searchParams.session_id;
+  const resolvedSearchParams = await searchParams;
+
+  const raw = resolvedSearchParams.session_id;
   const sessionId = Array.isArray(raw) ? raw[0] : raw;
 
   if (!sessionId) {
@@ -54,9 +49,9 @@ export default async function SuccessPage({ searchParams }: SuccessPageProps) {
           We couldn't find your checkout session. It may have expired or been
           invalid.
         </p>
-        <a href="/" className="underline">
+        <Link href="/" className="underline">
           Back to home
-        </a>
+        </Link>
       </main>
     );
   }

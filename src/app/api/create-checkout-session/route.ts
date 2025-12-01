@@ -1,16 +1,8 @@
-import Stripe from 'stripe';
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
 
 import { getPedalBySlug } from '@/modules/pedals/queries';
-
-if (!process.env.STRIPE_SECRET_KEY) {
-  throw new Error('Missing required environment variable: STRIPE_SECRET_KEY');
-}
-
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
-  apiVersion: '2025-11-17.clover'
-});
+import { stripe } from '@/lib/stripe';
 
 const createSessionSchema = z.object({
   slug: z.string().min(1),
@@ -20,7 +12,7 @@ const createSessionSchema = z.object({
 /**
  * Handles POST requests to create a Stripe Checkout session for a pedal.
  *
- * Validates the JSON body for `slug` and `quantity`, resolves the pedal by slug, ensures the pedal is available and has a Stripe price ID, determines the site origin from the request `Origin` header or NEXT_PUBLIC_SITE_URL, creates a Stripe Checkout session (payment mode) restricted to US/CA shipping, and responds with the session URL or an error payload.
+ * Validates the JSON body for `slug` and `quantity`, resolves the pedal by slug, ensures the pedal is available and has a Stripe price ID, determines the site origin from the request `Origin` header or NEXT_PUBLIC_SITE_URL, creates a Stripe Checkout session (payment mode) restricted to US shipping, and responds with the session URL or an error payload.
  *
  * @param request - Incoming NextRequest whose JSON body must include `slug` (string) and optional `quantity` (positive integer)
  * @returns A JSON object `{ url: string }` containing the Checkout session URL on success, or `{ error: string }` describing the failure on validation, product lookup, origin resolution, or internal error.
@@ -57,14 +49,43 @@ export async function POST(request: NextRequest) {
       line_items: [
         {
           price: pedal.stripePriceId,
-          quantity: quantity
+          quantity
         }
       ],
       mode: 'payment',
+
+      automatic_tax: {
+        enabled: true
+      },
+      shipping_address_collection: {
+        allowed_countries: ['US']
+      },
+      // Flat rate shipping
+      shipping_options: [
+        {
+          shipping_rate_data: {
+            display_name: 'Standard shipping',
+            type: 'fixed_amount',
+            fixed_amount: {
+              amount: 1200, // 1200 cents = $12.00
+              currency: 'usd'
+            },
+            // Optional but nice to show on Checkout
+            delivery_estimate: {
+              minimum: { unit: 'business_day', value: 3 },
+              maximum: { unit: 'business_day', value: 5 }
+            },
+            // Let Stripe Tax decide how to tax shipping
+            tax_behavior: 'exclusive' // matches how your product is taxed
+          }
+        }
+      ],
+
       success_url: `${origin}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${origin}/checkout/cancel`,
-      shipping_address_collection: {
-        allowed_countries: ['US', 'CA']
+      metadata: {
+        productSlug: pedal.slug,
+        productName: pedal.name
       }
     });
 
