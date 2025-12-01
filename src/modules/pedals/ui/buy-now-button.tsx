@@ -10,7 +10,7 @@ interface BuyNowButtonProps {
 }
 
 const CheckoutSessionResponseSchema = z.object({
-  url: z.string().url().optional(),
+  url: z.url().optional(),
   error: z.string().optional()
 });
 
