@@ -122,7 +122,7 @@ export const pedals: Pedal[] = [
       'input buffering and output level recovery, while a silicon transistor fuzz—reminiscent ' +
       'of vintage Fuzz Face and Tone Bender circuits—sits in the middle of the chain. ' +
       'After that, diode hard clipping and a Big Muff–style tone section shape the final voice, ' +
-      'giving the Monolith a huge range of textures from smooth sustain to jagged, snarling fuzz.',
+      'giving the Large Marge a huge range of textures from smooth sustain to jagged, snarling fuzz.',
     descriptionBullets: [
       'Inspired by the 1995 Lovetone Big Cheese silicon fuzz',
       'Hybrid topology with op-amp buffering, silicon fuzz core, and diode hard clipping',
