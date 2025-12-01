@@ -64,7 +64,7 @@ export async function POST(request: NextRequest) {
         enabled: true
       },
       shipping_address_collection: {
-        allowed_countries: ['US', 'CA']
+        allowed_countries: ['US']
       },
       // Flat rate shipping
       shipping_options: [
