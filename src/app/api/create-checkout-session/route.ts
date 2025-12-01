@@ -8,9 +8,7 @@ if (!process.env.STRIPE_SECRET_KEY) {
   throw new Error('Missing required environment variable: STRIPE_SECRET_KEY');
 }
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
-  apiVersion: '2025-11-17.clover'
-});
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 const createSessionSchema = z.object({
   slug: z.string().min(1),
@@ -57,14 +55,44 @@ export async function POST(request: NextRequest) {
       line_items: [
         {
           price: pedal.stripePriceId,
-          quantity: quantity
+          quantity
         }
       ],
       mode: 'payment',
-      success_url: `${origin}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${origin}/checkout/cancel`,
+
+      automatic_tax: {
+        enabled: true
+      },
       shipping_address_collection: {
         allowed_countries: ['US', 'CA']
+      },
+      // Flat rate shipping
+      shipping_options: [
+        {
+          shipping_rate_data: {
+            display_name: 'Standard shipping',
+            type: 'fixed_amount',
+            fixed_amount: {
+              amount: 1200, // 1200 cents = $12.00
+              currency: 'usd'
+            },
+            // Optional but nice to show on Checkout
+            delivery_estimate: {
+              minimum: { unit: 'business_day', value: 3 },
+              maximum: { unit: 'business_day', value: 5 }
+            },
+            // Let Stripe Tax decide how to tax shipping
+            tax_behavior: 'exclusive' // matches how your product is taxed
+          }
+        }
+      ],
+
+      success_url: `${origin}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${origin}/checkout/cancel`,
+      metadata: {
+        productSlug: pedal.slug,
+        productName: pedal.name,
+        bbpDebugAutomaticTax: 'true'
       }
     });
 

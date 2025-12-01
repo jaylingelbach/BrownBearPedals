@@ -47,7 +47,8 @@ export const pedals: Pedal[] = [
       'Bring the iconic sound of the Tree Fiddy into your rig and experience it for yourself.',
     tags: ['Overdrive', 'One-off'],
     type: 'Overdrive',
-    stripePriceId: process.env.STRIPE_PRICE_ID_TREE_FIDDY
+    stripePriceId: process.env.STRIPE_PRICE_ID_TREE_FIDDY,
+    productLine: 'Limited'
   },
   {
     slug: 'son-of-a-b',
