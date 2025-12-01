@@ -8,13 +8,13 @@ if (!process.env.STRIPE_SECRET_KEY) {
   throw new Error('Missing required environment variable: STRIPE_SECRET_KEY');
 }
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY ?? '', {
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
   apiVersion: '2025-11-17.clover'
 });
 
 const createSessionSchema = z.object({
   slug: z.string().min(1),
-  quantity: z.number().int().positive().default(1)
+  quantity: z.number().int().positive().max(10).default(1)
 });
 
 export async function POST(request: NextRequest) {
