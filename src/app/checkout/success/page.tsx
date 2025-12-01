@@ -1,10 +1,5 @@
-import Stripe from 'stripe';
 import Link from 'next/link';
-
-if (!process.env.STRIPE_SECRET_KEY) {
-  throw new Error('Missing required environment variable: STRIPE_SECRET_KEY');
-}
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+import { stripe } from '@/lib/stripe';
 
 // Next 16: searchParams is a Promise
 interface SuccessPageProps {

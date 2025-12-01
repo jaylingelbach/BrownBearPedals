@@ -1,14 +1,8 @@
-import Stripe from 'stripe';
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
 
 import { getPedalBySlug } from '@/modules/pedals/queries';
-
-if (!process.env.STRIPE_SECRET_KEY) {
-  throw new Error('Missing required environment variable: STRIPE_SECRET_KEY');
-}
-
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+import { stripe } from '@/lib/stripe';
 
 const createSessionSchema = z.object({
   slug: z.string().min(1),
@@ -18,7 +12,7 @@ const createSessionSchema = z.object({
 /**
  * Handles POST requests to create a Stripe Checkout session for a pedal.
  *
- * Validates the JSON body for `slug` and `quantity`, resolves the pedal by slug, ensures the pedal is available and has a Stripe price ID, determines the site origin from the request `Origin` header or NEXT_PUBLIC_SITE_URL, creates a Stripe Checkout session (payment mode) restricted to US/CA shipping, and responds with the session URL or an error payload.
+ * Validates the JSON body for `slug` and `quantity`, resolves the pedal by slug, ensures the pedal is available and has a Stripe price ID, determines the site origin from the request `Origin` header or NEXT_PUBLIC_SITE_URL, creates a Stripe Checkout session (payment mode) restricted to US shipping, and responds with the session URL or an error payload.
  *
  * @param request - Incoming NextRequest whose JSON body must include `slug` (string) and optional `quantity` (positive integer)
  * @returns A JSON object `{ url: string }` containing the Checkout session URL on success, or `{ error: string }` describing the failure on validation, product lookup, origin resolution, or internal error.
@@ -91,8 +85,7 @@ export async function POST(request: NextRequest) {
       cancel_url: `${origin}/checkout/cancel`,
       metadata: {
         productSlug: pedal.slug,
-        productName: pedal.name,
-        bbpDebugAutomaticTax: 'true'
+        productName: pedal.name
       }
     });
 
