@@ -1,4 +1,5 @@
 import Stripe from 'stripe';
+import Link from 'next/link';
 
 if (!process.env.STRIPE_SECRET_KEY) {
   throw new Error('Missing required environment variable: STRIPE_SECRET_KEY');
@@ -22,9 +23,9 @@ export default async function SuccessPage({ searchParams }: SuccessPageProps) {
         <p className="mb-4">
           The <code>session_id</code> query parameter was missing.
         </p>
-        <a href="/" className="underline">
+        <Link href="/" className="underline">
           Back to home
-        </a>
+        </Link>
       </main>
     );
   }
@@ -63,9 +64,9 @@ export default async function SuccessPage({ searchParams }: SuccessPageProps) {
         Your pedal will ship in 3–5 business days. If you have any questions,
         just reply to your confirmation email.
       </p>
-      <a href="/" className="underline">
+      <Link href="/" className="underline">
         Back to home
-      </a>
+      </Link>
     </main>
   );
 }
