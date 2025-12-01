@@ -104,5 +104,44 @@ export const pedals: Pedal[] = [
     tags: ['Overdrive', 'Tarot'],
     type: 'Overdrive',
     productLine: 'Tarot'
+  },
+  {
+    slug: 'large-marge',
+    name: 'Large Marge',
+    priceCents: 19500,
+    status: 'available',
+    imageUrl: '/large-marge.png',
+    heroImageUrl: '/ProductTestImage.png',
+    descriptionShort: 'Based on Lovetone Big Cheese',
+    descriptionIntro:
+      'The Large Marge Fuzz is Brown Bear’s adaptation of the classic Lovetone Big Cheese, ' +
+      'a famously flexible fuzz first released in 1995. The original circuit has earned a cult ' +
+      'following thanks to an artist list that includes players like Jimmy Page, ' +
+      'Johnny Marr, J Mascis, and Jeff Tweedy.\n\n' +
+      'At its core, the design combines several classic ideas into one box. An op-amp handles ' +
+      'input buffering and output level recovery, while a silicon transistor fuzz—reminiscent ' +
+      'of vintage Fuzz Face and Tone Bender circuits—sits in the middle of the chain. ' +
+      'After that, diode hard clipping and a Big Muff–style tone section shape the final voice, ' +
+      'giving the Monolith a huge range of textures from smooth sustain to jagged, snarling fuzz.',
+    descriptionBullets: [
+      'Inspired by the 1995 Lovetone Big Cheese silicon fuzz',
+      'Hybrid topology with op-amp buffering, silicon fuzz core, and diode hard clipping',
+      'Big Muff–style tone control for powerful EQ shaping',
+      'Four-position rotary with tone bypass, scooped mids, and flat mids options',
+      '“Cheese” mode misbiases the fuzz for gated, dying-amp style tones',
+      'Optional final boost stage for increased maximum output level',
+      'Capable of everything from classic fuzz roar to experimental, glitchy textures'
+    ],
+    descriptionOutro:
+      'Large Marge keeps the spirit of the original Big Cheese intact while adding a little extra ' +
+      'headroom on tap. By reconfiguring the output buffer as a dedicated boost, it can push ' +
+      'your amp harder when you need it, without losing the character that made the circuit ' +
+      'legendary in the first place. Whether you are chasing iconic shoegaze walls of sound, ' +
+      'chunky rhythm fuzz, or unpredictable gated chaos, the Large Marge is built to be the ' +
+      'centerpiece of your fuzz arsenal.',
+
+    tags: ['Fuzz', 'Tarot'],
+    type: 'Fuzz',
+    productLine: 'Tarot'
   }
 ];
