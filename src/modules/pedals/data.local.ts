@@ -53,7 +53,7 @@ export const pedals: Pedal[] = [
   {
     slug: 'son-of-a-b',
     name: 'Son of a B!',
-    priceCents: 10000,
+    priceCents: 17500,
     status: 'available',
     imageUrl: '/sob-2.jpg',
     heroImageUrl: '/ProductTestImage.png',
@@ -82,7 +82,7 @@ export const pedals: Pedal[] = [
   {
     slug: 'super-dolt',
     name: 'Super Dolt',
-    priceCents: 10000,
+    priceCents: 17500,
     status: 'available',
     imageUrl: '/super-dolt.png',
     heroImageUrl: '/ProductTestImage.png',
@@ -111,7 +111,7 @@ export const pedals: Pedal[] = [
   {
     slug: 'large-marge',
     name: 'Large Marge',
-    priceCents: 19500,
+    priceCents: 20000,
     status: 'available',
     imageUrl: '/large-marge.png',
     heroImageUrl: '/ProductTestImage.png',
