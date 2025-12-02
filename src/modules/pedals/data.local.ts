@@ -76,7 +76,8 @@ export const pedals: Pedal[] = [
       'From subtle grit to rich driven textures, it rewards touch and dynamics while keeping your playing front and center.',
     tags: ['Overdrive', 'Tarot'],
     type: 'Overdrive',
-    productLine: 'Tarot'
+    productLine: 'Tarot',
+    stripePriceId: process.env.STRIPE_PRICE_ID_SOB
   },
   {
     slug: 'super-dolt',
@@ -104,7 +105,8 @@ export const pedals: Pedal[] = [
       'Drop it onto your board, dial it in, and enjoy that expressive, amp-like drive wherever you play.',
     tags: ['Overdrive', 'Tarot'],
     type: 'Overdrive',
-    productLine: 'Tarot'
+    productLine: 'Tarot',
+    stripePriceId: process.env.STRIPE_PRICE_ID_SUPER_DOLT
   },
   {
     slug: 'large-marge',
@@ -143,6 +145,7 @@ export const pedals: Pedal[] = [
 
     tags: ['Fuzz', 'Tarot'],
     type: 'Fuzz',
-    productLine: 'Tarot'
+    productLine: 'Tarot',
+    stripePriceId: process.env.STRIPE_PRICE_ID_LARGE_MARGE
   }
 ];
