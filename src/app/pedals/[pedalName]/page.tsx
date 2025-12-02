@@ -67,6 +67,12 @@ export default async function Page({
               {price}
             </p>
 
+            {/* Backorder notice */}
+            <div className="mt-2 rounded-md border border-amber-200 bg-amber-50 px-3 py-2 text-xs sm:text-sm text-amber-900 text-left lg:text-left">
+              <span className="font-semibold">Backordered:</span> New orders are
+              expected to ship in approximately 4–6 weeks.
+            </div>
+
             <BuyNowButton slug={pedalName} />
           </div>
 
@@ -104,6 +110,7 @@ export default async function Page({
               </ul>
             </div>
           )}
+
           {/* Outro */}
           {hasOutro && (
             <div className="mt-2 space-y-3">
